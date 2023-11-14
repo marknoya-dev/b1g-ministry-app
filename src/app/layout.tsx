@@ -4,12 +4,12 @@ import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "B1G Ministry App",
   description: "Centralized Management System",
 };
 
-export const fontSans = FontSans({
+const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
