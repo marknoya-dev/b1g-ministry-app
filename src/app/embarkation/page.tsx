@@ -8,197 +8,69 @@ import {
 
 import CapacityCard from "@/components/CapacityCard";
 import DataTable from "@/components/DataTable";
-import { Participant, columns } from "@/lib/columns";
+import { columns } from "@/lib/columns";
+import { Participant, Bus } from "@/lib/types";
 
-async function getData(): Promise<Participant[]> {
+async function getParticipantsData(): Promise<Participant[]> {
+  const res = await fetch("http://localhost:3002/api/participants");
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return res.json();
+}
+
+async function getBusData(): Promise<Bus[]> {
   // Fetch data from your API here.
   return [
     {
-      ticketNum: "1A23BC",
-      name: "John Doe",
-      mobileNum: "0912 345 6789",
-      temp: "",
-      boarding: "Bus",
-      status: "Awaiting",
-      vehicle: "",
+      busName: "Bus 1",
+      maxCapacity: 40,
+      currCapacity: 0,
     },
     {
-      ticketNum: "4D56EF",
-      name: "Jane Doe",
-      mobileNum: "0987 654 3210",
-      temp: "",
-      boarding: "Car",
-      status: "Checked In",
-      vehicle: "Honda Accord",
+      busName: "Bus 2",
+      maxCapacity: 40,
+      currCapacity: 4,
     },
     {
-      ticketNum: "7G89HI",
-      name: "Samuel Johnson",
-      mobileNum: "0932 187 5943",
-      temp: "",
-      boarding: "Bus",
-      status: "Awaiting",
-      vehicle: "",
+      busName: "Bus 3",
+      maxCapacity: 40,
+      currCapacity: 0,
     },
     {
-      ticketNum: "2J34KL",
-      name: "Eva Thompson",
-      mobileNum: "0965 432 1098",
-      temp: "",
-      boarding: "Car",
-      status: "Checked In",
-      vehicle: "Ford Explorer",
+      busName: "Bus 4",
+      maxCapacity: 40,
+      currCapacity: 0,
     },
     {
-      ticketNum: "5M67NO",
-      name: "Michael Brown",
-      mobileNum: "0941 876 5432",
-      temp: "",
-      boarding: "Bus",
-      status: "In Transit",
-      vehicle: "",
+      busName: "Bus 5",
+      maxCapacity: 40,
+      currCapacity: 0,
     },
     {
-      ticketNum: "8P90QR",
-      name: "Sophia Davis",
-      mobileNum: "0978 210 3546",
-      temp: "",
-      boarding: "Car",
-      status: "Checked In",
-      vehicle: "Chevrolet Malibu",
+      busName: "Bus 6",
+      maxCapacity: 40,
+      currCapacity: 0,
     },
     {
-      ticketNum: "3S12TU",
-      name: "William Miller",
-      mobileNum: "0999 888 7777",
-      temp: "",
-      boarding: "Bus",
-      status: "Awaiting",
-      vehicle: "",
+      busName: "Bus 7",
+      maxCapacity: 40,
+      currCapacity: 0,
     },
     {
-      ticketNum: "6V45WX",
-      name: "Olivia Wilson",
-      mobileNum: "0923 456 7890",
-      temp: "",
-      boarding: "Car",
-      status: "Checked In",
-      vehicle: "Nissan Altima",
-    },
-    {
-      ticketNum: "9Y67ZD",
-      name: "Daniel Lee",
-      mobileNum: "0956 789 0123",
-      temp: "",
-      boarding: "Bus",
-      status: "Awaiting",
-      vehicle: "",
-    },
-    {
-      ticketNum: "0AA1BB",
-      name: "Ava Martinez",
-      mobileNum: "0901 234 5678",
-      temp: "",
-      boarding: "Car",
-      status: "In Transit",
-      vehicle: "Toyota Corolla",
-    },
-    {
-      ticketNum: "1A23BC",
-      name: "John Doe",
-      mobileNum: "0912 345 6789",
-      temp: "",
-      boarding: "Bus",
-      status: "Awaiting",
-      vehicle: "",
-    },
-    {
-      ticketNum: "4D56EF",
-      name: "Jane Doe",
-      mobileNum: "0987 654 3210",
-      temp: "",
-      boarding: "Car",
-      status: "Checked In",
-      vehicle: "Honda Accord",
-    },
-    {
-      ticketNum: "7G89HI",
-      name: "Samuel Johnson",
-      mobileNum: "0932 187 5943",
-      temp: "",
-      boarding: "Bus",
-      status: "Awaiting",
-      vehicle: "",
-    },
-    {
-      ticketNum: "2J34KL",
-      name: "Eva Thompson",
-      mobileNum: "0965 432 1098",
-      temp: "",
-      boarding: "Car",
-      status: "Checked In",
-      vehicle: "Ford Explorer",
-    },
-    {
-      ticketNum: "5M67NO",
-      name: "Michael Brown",
-      mobileNum: "0941 876 5432",
-      temp: "",
-      boarding: "Bus",
-      status: "In Transit",
-      vehicle: "",
-    },
-    {
-      ticketNum: "8P90QR",
-      name: "Sophia Davis",
-      mobileNum: "0978 210 3546",
-      temp: "",
-      boarding: "Car",
-      status: "Checked In",
-      vehicle: "Chevrolet Malibu",
-    },
-    {
-      ticketNum: "3S12TU",
-      name: "William Miller",
-      mobileNum: "0999 888 7777",
-      temp: "",
-      boarding: "Bus",
-      status: "Awaiting",
-      vehicle: "",
-    },
-    {
-      ticketNum: "9Y67ZD",
-      name: "Daniel Lee",
-      mobileNum: "0956 789 0123",
-      temp: "",
-      boarding: "Bus",
-      status: "Awaiting",
-      vehicle: "",
-    },
-    {
-      ticketNum: "6V45WX",
-      name: "Olivia Wilson",
-      mobileNum: "0923 456 7890",
-      temp: "",
-      boarding: "Car",
-      status: "Checked In",
-      vehicle: "Nissan Altima",
-    },
-
-    {
-      ticketNum: "0AA1BB",
-      name: "Ava Martinez",
-      mobileNum: "0901 234 5678",
-      temp: "",
-      boarding: "Car",
-      status: "In Transit",
-      vehicle: "Toyota Corolla",
+      busName: "Bus 8",
+      maxCapacity: 40,
+      currCapacity: 0,
     },
   ];
 }
 
 export default async function Home() {
-  const data = await getData();
+  const [buses, participants] = await Promise.all([
+    getBusData(),
+    getParticipantsData(),
+  ]);
 
   return (
     <main>
@@ -216,14 +88,14 @@ export default async function Home() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-4 grid-rows-2 gap-3">
-              <CapacityCard label="Bus 1" value={40} max={40} />
-              <CapacityCard label="Bus 2" max={40} value={0} />
-              <CapacityCard label="Bus 3" max={40} value={0} />
-              <CapacityCard label="Bus 4" max={40} value={0} />
-              <CapacityCard label="Bus 5" max={40} value={0} />
-              <CapacityCard label="Bus 6" max={40} value={0} />
-              <CapacityCard label="Bus 7" max={40} value={0} />
-              <CapacityCard label="Bus 8" max={40} value={0} />
+              {buses.map((bus) => (
+                <CapacityCard
+                  label={bus.busName}
+                  key={bus.busName}
+                  value={bus.currCapacity}
+                  max={bus.maxCapacity}
+                />
+              ))}
             </div>
           </CardContent>
         </Card>
@@ -232,7 +104,7 @@ export default async function Home() {
             <CardTitle className="text-lg">All Participants</CardTitle>
           </CardHeader>
           <CardContent>
-            <DataTable columns={columns} data={data} />
+            <DataTable columns={columns} data={participants} />
           </CardContent>
         </Card>
       </div>

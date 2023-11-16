@@ -59,14 +59,16 @@ export default function DataTable<TData, TValue>({
       <div className="flex gap-[8px] items-center py-4">
         <Input
           placeholder="Filter name"
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          value={
+            (table.getColumn("fullName")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
+            table.getColumn("fullName")?.setFilterValue(event.target.value)
           }
           className="max-w-[200px]"
         />
         <Input
-          placeholder="Filter status..."
+          placeholder="Filter status"
           value={(table.getColumn("status")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("status")?.setFilterValue(event.target.value)

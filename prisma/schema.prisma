@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Participant {
+  id        String      @id  @default(auto()) @map("_id") @db.ObjectId
+  ticketCode String @unique 
+  firstName String
+  lastName  String
+  nickname  String
+  gender    String
+  email     String
+  mobileNum String
+  birthMonth Int
+  birthYear Int
+  civilStatus String
+  profession String
+  workplace String
+  contactPerson_name String
+  contactPerson_mobile String
+  contactPerson_relationship String
+  rideToVenue String?
+  rideToVenue_name String?
+  rideToVenue_temp String?
+  rideFromVenue   String?
+  rideFromVenue_name String?
+  rideFromVenue_temp String?
+  embarkation_status EmbarkationStatus @default(Awaiting)
+  embarkation_checkInTime DateTime? @default(now())
+  medicalCondition String?
+  foodRestriction String?
+  dgroup_leader String
+  dgroup_leader_mobile String
+  satellite String
+  satellite_loc String
+  age       Int
+  workshop1 String
+  workshop2 String
+  teamName String
+  room      String?
+}
+
+enum EmbarkationStatus {
+  Awaiting
+  CheckedIn
+  InTransit
+}
