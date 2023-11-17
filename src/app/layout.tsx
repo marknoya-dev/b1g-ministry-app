@@ -28,7 +28,7 @@ export default function RootLayout({
         )}
       >
         <Navbar />
-        <section className="sm:px-[4%] md:px-[8%] max-w-[1600px] mx-auto mt-[60px] mb-[50px]">
+        <section className="px-[5%] md:px-[8%] max-w-[1800px] mx-auto mt-[60px] mb-[50px]">
           {children}
         </section>
       </body>

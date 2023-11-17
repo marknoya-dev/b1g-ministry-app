@@ -10,42 +10,86 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Bus {
+  id                   String        @id @default(auto()) @map("_id") @db.ObjectId
+  name                 String
+  currCapacity         Int           @default(0)
+  maxCapacity          Int           @default(40)
+  toVenue_passengers   Participant[] @relation("toVenue_bus")
+  fromVenue_passengers Participant[] @relation("fromVenue_bus")
+
+  @@map("buses")
+}
+
+model Carpool {
+  id                   String        @id @default(auto()) @map("_id") @db.ObjectId
+  vehicle              String
+  driver               Participant   @relation("carpool_driver", fields: [driverId], references: [id])
+  driverId             String        @unique @db.ObjectId
+  toVenue_passengers   Participant[] @relation("toVenue_carpool")
+  fromVenue_passengers Participant[] @relation("fromVenue_carpool")
+
+  @@map("carpools")
+}
+
 model Participant {
-  id        String      @id  @default(auto()) @map("_id") @db.ObjectId
-  ticketCode String @unique 
-  firstName String
-  lastName  String
-  nickname  String
-  gender    String
-  email     String
-  mobileNum String
-  birthMonth Int
-  birthYear Int
-  civilStatus String
-  profession String
-  workplace String
-  contactPerson_name String
-  contactPerson_mobile String
+  id                         String @id @default(auto()) @map("_id") @db.ObjectId
+  ticketCode                 String @unique
+  firstName                  String
+  lastName                   String
+  nickname                   String
+  gender                     String
+  email                      String
+  mobileNum                  String
+  birthMonth                 Int
+  birthYear                  Int
+  civilStatus                String
+  profession                 String
+  workplace                  String
+  contactPerson_name         String
+  contactPerson_mobile       String
   contactPerson_relationship String
-  rideToVenue String?
-  rideToVenue_name String?
-  rideToVenue_temp String?
-  rideFromVenue   String?
-  rideFromVenue_name String?
-  rideFromVenue_temp String?
-  embarkation_status EmbarkationStatus @default(Awaiting)
-  embarkation_checkInTime DateTime? @default(now())
-  medicalCondition String?
-  foodRestriction String?
-  dgroup_leader String
+
+  drivingFor              Carpool?          @relation("carpool_driver")
+  //Embarkation from Center details
+  embarkation_temp        String?
+  embarkation_status      EmbarkationStatus @default(Awaiting)
+  embarkation_checkInTime DateTime?         @default(now())
+
+  rideToVenue         String?
+  rideToVenue_Id      String?  @db.ObjectId
+  rideToVenue_temp    String?
+  rideToVenue_carpool Carpool? @relation("toVenue_carpool", fields: [rideToVenue_Id], references: [id], onUpdate: NoAction, onDelete: NoAction)
+  rideToVenue_bus     Bus?     @relation("toVenue_bus", fields: [rideToVenue_Id], references: [id])
+
+  //Embarkation from MMRC details
+  rideFromVenue         String?
+  rideFromVenue_Id      String?  @db.ObjectId
+  rideFromVenue_carpool Carpool? @relation("fromVenue_carpool", fields: [rideFromVenue_Id], references: [id], onUpdate: NoAction, onDelete: NoAction)
+  rideFromVenue_bus     Bus?     @relation("fromVenue_bus", fields: [rideFromVenue_Id], references: [id])
+
+  medicalCondition     String?
+  foodRestriction      String?
+  dgroup_leader        String
   dgroup_leader_mobile String
-  satellite String
-  satellite_loc String
-  age       Int
-  workshop1 String
-  workshop2 String
-  teamName String
-  room      String?
+  satellite_loc        String
+  age                  Int
+  workshop1            String
+  workshop2            String
+  teamName             String
+  room                 Room?   @relation("room", fields: [roomId], references: [id])
+  roomId               String? @db.ObjectId
+
+  @@map("participants")
+}
+
+model Room {
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  capacity  Int
+  occupants Participant[] @relation("room")
+
+  @@map("rooms")
 }
 
 enum EmbarkationStatus {

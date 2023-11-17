@@ -13,29 +13,3 @@ export async function GET() {
     );
   }
 }
-
-// export const POST = async (request) => {
-//   try {
-//     const body = await req.json();
-//     const { firstName, lastName } = body;
-//     const newParticipant = await prisma.participants.create({
-//       data: {
-//         firstName,
-//         lastName,
-//       },
-//     });
-
-//     return NextResponse.json(newParticipant);
-//   } catch (err) {
-//     return NextResponse.json({ message: "POST Error", err }, { status: 500 });
-//   }
-// };
-
-// export const GET = async () => {
-//   try {
-//     const participant = await prisma.participants.findMany();
-//     return NextResponse.json(participant);
-//   } catch (err) {
-//     return NextResponse.json({ message: "GET Error", err }, { status: 500 });
-//   }
-// };
