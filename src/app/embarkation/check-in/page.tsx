@@ -7,9 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { Input } from "@/components/ui/input";
 import { CheckInForm } from "@/components/CheckInForm";
-import { Participant } from "@/lib/types";
 
 export default function Page() {
   return (

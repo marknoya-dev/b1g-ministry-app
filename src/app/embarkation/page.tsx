@@ -12,7 +12,7 @@ import { columns } from "@/lib/columns";
 import { Participant, Bus } from "@/lib/types";
 
 async function getParticipantsData(): Promise<Participant[]> {
-  const res = await fetch("http://localhost:3002/api/participants");
+  const res = await fetch(process.env.URL + `/api/participants`);
 
   if (!res.ok) {
     throw new Error("Failed to fetch data");

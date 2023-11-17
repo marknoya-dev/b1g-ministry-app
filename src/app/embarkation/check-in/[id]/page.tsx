@@ -1,10 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Participant } from "@prisma/client";
 
 async function getParticipantData(ticketCode: string): Promise<Participant> {
-  const res = await fetch(
-    `http://localhost:3000/api/participants/${ticketCode}`
-  );
+  const res = await fetch(process.env.URL + `/api/participants/${ticketCode}`);
 
   if (!res.ok) {
     throw new Error(`Failed to fetch data + ${res.status}`);
