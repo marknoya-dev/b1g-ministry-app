@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
-
-module.exports = nextConfig
+const nextConfig = {};
+env: {
+  API_URL: "https://yours-project.vercel.app";
+}
+module.exports = nextConfig;

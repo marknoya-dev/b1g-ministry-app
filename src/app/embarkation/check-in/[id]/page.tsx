@@ -2,7 +2,10 @@ import React from "react";
 import { Participant } from "@prisma/client";
 
 async function getParticipantData(ticketCode: string): Promise<Participant> {
-  const res = await fetch(process.env.URL + `/api/participants/${ticketCode}`);
+  const API_URL = process.env.API_URL;
+  const res = await fetch(`${API_URL}/api/participants/${ticketCode}`, {
+    cache: "no-store",
+  });
 
   if (!res.ok) {
     throw new Error(`Failed to fetch data + ${res.status}`);
