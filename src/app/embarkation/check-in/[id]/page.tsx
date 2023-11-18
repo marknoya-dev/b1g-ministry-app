@@ -2,7 +2,7 @@ import React from "react";
 import { Participant } from "@prisma/client";
 
 async function getParticipantData(ticketCode: string): Promise<Participant> {
-  const API_URL = process.env.NEXT_PUBLIC_API;
+  const API_URL = process.env.API_URL;
   const res = await fetch(`${API_URL}/api/participants/${ticketCode}`);
 
   if (!res.ok) {
