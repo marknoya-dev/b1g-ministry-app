@@ -13,13 +13,12 @@ import { Participant, Bus } from "@/lib/types";
 
 async function getParticipantsData(): Promise<Participant[]> {
   const API_URL = process.env.NEXT_PUBLIC_API;
-  const res = await fetch(`${API_URL}/api/participants`, {
-    cache: "no-store",
-  });
+  const res = await fetch(`${API_URL}/api/participants`);
 
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
+
   return res.json();
 }
 
