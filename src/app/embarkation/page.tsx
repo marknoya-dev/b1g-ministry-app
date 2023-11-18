@@ -12,7 +12,7 @@ import { columns } from "@/lib/columns";
 import { Participant, Bus } from "@/lib/types";
 
 async function getParticipantsData(): Promise<Participant[]> {
-  const API_URL = process.env.API_URL;
+  const API_URL = process.env.NEXT_PUBLIC_API;
   const res = await fetch(`${API_URL}/api/participants`, {
     cache: "no-store",
   });

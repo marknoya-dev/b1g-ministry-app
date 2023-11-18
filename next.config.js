@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {};
 env: {
-  API_URL: "https://yours-project.vercel.app";
+  NEXT_PUBLIC_API: "http://b1g-ministry-app.vercel.app";
 }
 module.exports = nextConfig;
