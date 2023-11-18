@@ -62,9 +62,7 @@ const temperatureMask: MaskitoOptions = {
 
 async function getParticipantData(ticketCode: string): Promise<Participant> {
   const API_URL = process.env.NEXT_PUBLIC_API;
-  const res = await fetch(`${API_URL}/api/participants/${ticketCode}`, {
-    cache: "no-store",
-  });
+  const res = await fetch(`${API_URL}/api/participants/${ticketCode}`);
 
   if (!res.ok) {
     throw new Error(`Failed to fetch data + ${res.status}`);
