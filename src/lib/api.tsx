@@ -1,14 +1,8 @@
 import { Participant, Bus } from "./types";
-// import fetch from "isomorphic-fetch";
-const dotenvExpand = require("dotenv-expand");
-const expanded = dotenvExpand.expand({ parsed: { ...process.env } });
 
-export const API_URL = expanded.parsed.NEXT_PUBLIC_BASE_API_URL;
+export const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
 
 export async function getParticipantsData(): Promise<any> {
-  console.log(API_URL);
-  console.log(expanded.parsed);
-
   if (API_URL) {
     const res: any = await fetch(`${API_URL}/api/participants`);
 
@@ -21,15 +15,19 @@ export async function getParticipantsData(): Promise<any> {
 }
 
 export async function getParticipantData(ticketCode: string): Promise<any> {
-  const res: any = await fetch(`${API_URL}/api/participants/${ticketCode}`);
-
+  console.log(process.env.NEXT_PUBLIC_BASE_API_URL);
   if (API_URL) {
+    const res: any = await fetch(`${API_URL}/api/participants/${ticketCode}`);
+
     if (!res.ok) {
       throw new Error(`Failed to fetch data + ${res.status}`);
     }
 
     return res.json();
-  } else return null;
+  } else {
+    console.log(API_URL);
+    return null;
+  }
 }
 
 export async function getBusData(): Promise<Bus[]> {

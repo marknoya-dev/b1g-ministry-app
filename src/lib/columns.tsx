@@ -38,7 +38,7 @@ export const columns: ColumnDef<Participant>[] = [
     cell: ({ row }) => {
       const ticketCode: string = row.getValue("ticketCode");
       return (
-        <div className="whitespace-nowrap text-ellipsis w-full">
+        <div className="whitespace-nowrap text-ellipsis w-full overflow-hidden">
           {ticketCode}
         </div>
       );
