@@ -1,3 +1,7 @@
+export const revalidate = true;
+import { revalidatePath } from "next/cache";
+revalidatePath("/embarkation");
+
 import { getAllBusData, API_URL } from "@/lib/api";
 import { Participant } from "@/lib/types";
 import CapacityCard from "@/components/CapacityCard";
@@ -13,7 +17,9 @@ import {
 
 async function getParticipantsData(): Promise<Participant[]> {
   if (API_URL) {
-    const res: any = await fetch(`${API_URL}/api/participants/all`);
+    const res: any = await fetch(`${API_URL}/api/participants/all`, {
+      cache: "no-store",
+    });
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
