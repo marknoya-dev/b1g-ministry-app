@@ -3,12 +3,13 @@ import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 
 const CapactiyCard = ({ label, value, max }) => {
+  const relativeValue = (value / max) * 100;
   return (
     <Card className="flex flex-col gap-1 p-3">
       <div className="flex gap-1 items-end">
         <span
           className={`font-semibold text-md ${
-            value === max ? "text-green-700" : "text-gray-700"
+            relativeValue === max ? "text-green-700" : "text-gray-700"
           }`}
         >
           {label}
@@ -19,7 +20,7 @@ const CapactiyCard = ({ label, value, max }) => {
           <span>{max})</span>
         </div>
       </div>
-      <Progress value={value} max={max} className="w-full" />
+      <Progress value={relativeValue} className="w-full" />
     </Card>
   );
 };

@@ -8,7 +8,8 @@ import {
 import CapacityCard from "@/components/CapacityCard";
 import DataTable from "@/components/DataTable";
 import { columns } from "@/lib/columns";
-import { getParticipantsData, getBusData, API_URL } from "@/lib/api";
+import { getParticipantsData, getAllBusData, API_URL } from "@/lib/api";
+import { useState } from "react";
 
 export default async function Home() {
   if (!API_URL) {
@@ -16,11 +17,10 @@ export default async function Home() {
   }
 
   const [buses, participants] = await Promise.all([
-    getBusData(),
+    getAllBusData(),
     getParticipantsData(),
   ]);
 
-  console.log(participants);
   return (
     <main>
       <h1 className="text-[24px] font-bold mb-[16px] text-gray-700">
@@ -39,10 +39,10 @@ export default async function Home() {
             <div className="grid grid-cols-4 grid-rows-2 gap-3">
               {buses.map((bus) => (
                 <CapacityCard
-                  label={bus.busName}
-                  key={bus.busName}
+                  label={bus.name}
+                  key={bus.name}
                   value={bus.currCapacity}
-                  max={bus.maxCapacity}
+                  max={40}
                 />
               ))}
             </div>
@@ -53,10 +53,7 @@ export default async function Home() {
             <CardTitle className="text-lg">All Participants</CardTitle>
           </CardHeader>
           <CardContent>
-            <DataTable
-              columns={columns}
-              data={participants ? participants : []}
-            />
+            <DataTable columns={columns} data={participants} />
           </CardContent>
         </Card>
       </div>

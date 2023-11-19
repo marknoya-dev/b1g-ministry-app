@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Participant } from "./types";
@@ -70,41 +70,45 @@ export const columns: ColumnDef<Participant>[] = [
     },
   },
   {
-    accessorKey: "rideToVenue_temp",
-    header: "Temp",
+    accessorKey: "embarkation_temp",
+    header: "Temp (°C)",
     size: 100,
     cell: ({ row }) => {
-      const temp = row.getValue("rideToVenue_temp");
-
-      return temp ? temp : <span className="text-slate-400">No record</span>;
+      const temp = row.original.embarkation_temp;
+      return temp ? (
+        <span>{temp + "°C"}</span>
+      ) : (
+        <span className="text-slate-400">No record</span>
+      );
     },
   },
   {
     accessorKey: "rideToVenue",
-    header: "Boarding",
+    header: "Vehicle to Venue",
     size: 150,
     cell: ({ row }) => {
       return <Badge variant="outline">{row.getValue("rideToVenue")}</Badge>;
     },
   },
   {
-    id: "status",
+    id: "embarkation_status",
     accessorKey: "embarkation_status",
     size: 100,
     header: "Status",
     cell: ({ row }) => {
-      const status = row.getValue("status");
-      let badge = <></>;
+      const status = row.original.embarkation_status as string | undefined;
+      switch (status) {
+        case "Awaiting":
+          return <Badge variant="warning">Pending</Badge>;
+          break;
 
-      if (status === "Awaiting") {
-        badge = <Badge variant="warning">{status}</Badge>;
-      } else if (status === "In Transit") {
-        badge = <Badge variant="info">{row.getValue("status")}</Badge>;
-      } else {
-        badge = <Badge variant="success">{row.getValue("status")}</Badge>;
+        case "CheckedIn":
+          return <Badge variant="success">Checked In</Badge>;
+          break;
+
+        default:
+          break;
       }
-
-      return badge;
     },
   },
   {

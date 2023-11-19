@@ -54,11 +54,10 @@ model Participant {
   //Embarkation from Center details
   embarkation_temp        String?
   embarkation_status      EmbarkationStatus @default(Awaiting)
-  embarkation_checkInTime String?        
+  embarkation_checkInTime String?
 
   rideToVenue         String?
   rideToVenue_Id      String?  @db.ObjectId
-  rideToVenue_temp    String?
   rideToVenue_carpool Carpool? @relation("toVenue_carpool", fields: [rideToVenue_Id], references: [id], onUpdate: NoAction, onDelete: NoAction)
   rideToVenue_bus     Bus?     @relation("toVenue_bus", fields: [rideToVenue_Id], references: [id])
 
@@ -77,8 +76,8 @@ model Participant {
   workshop1            String
   workshop2            String
   teamName             String
-  room                 Room?   @relation("room", fields: [roomId], references: [id])
   roomId               String? @db.ObjectId
+  room                 Room?   @relation("room", fields: [roomId], references: [id])
 
   @@map("participants")
 }
