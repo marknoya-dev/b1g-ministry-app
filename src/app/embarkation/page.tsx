@@ -12,6 +12,7 @@ import { getParticipantsData, getBusData, API_URL } from "@/lib/api";
 
 export default async function Home() {
   if (!API_URL) {
+    console.log("Retesting");
     return null;
   }
 
