@@ -1,8 +1,11 @@
 import { Participant, Bus } from "./types";
 
-const API_URL = process.env.NEXT_PUBLIC_URL;
+const dotenvExpand = require("dotenv-expand");
+const expanded = dotenvExpand.expand({ parsed: { ...process.env } });
+
+const API_URL = expanded.parsed.NEXT_PUBLIC_URL;
+
 export async function getParticipantsData(): Promise<Participant[]> {
-  console.log(`${API_URL}/api/participants`);
   const res = await fetch(`${API_URL}/api/participants`);
 
   if (!res.ok) {

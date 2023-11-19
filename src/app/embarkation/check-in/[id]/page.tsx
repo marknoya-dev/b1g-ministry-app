@@ -4,7 +4,6 @@ import { getParticipantData } from "@/lib/api";
 export default async function Page(url: { params: { id: string } }) {
   const { id } = url.params;
   const data = await getParticipantData(id);
-  console.log(id);
 
   return <div>{id}</div>;
 }
