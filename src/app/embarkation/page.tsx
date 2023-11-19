@@ -48,10 +48,10 @@ export default async function Home() {
             <CardTitle className="text-lg">All Participants</CardTitle>
           </CardHeader>
           <CardContent>
-            {/* <DataTable
+            <DataTable
               columns={columns}
-              data={participants ? participants : null}
-            /> */}
+              data={participants ? participants : []}
+            />
           </CardContent>
         </Card>
       </div>
