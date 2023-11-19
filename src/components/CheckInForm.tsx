@@ -84,33 +84,38 @@ export function CheckInForm(onSubmit: any) {
   async function checkTicketHandler(
     values: z.infer<typeof ticketCodeForm>
   ): Promise<void> {
-    setIsLoading((isLoading) => true);
+    setIsLoading((isLoading) => !isLoading);
     const data = await getParticipantData(values.ticketCode);
     const participant = (data as { participant?: Participant })?.participant;
 
     if (!participant) {
-      setOpenModal_notFound((openModal_notFound) => true);
+      setOpenModal_notFound((openModal_notFound) => !openModal_notFound);
     } else {
       setParticipantData(participant);
-      setOpenModal_found((openModal_found) => true);
+      setOpenModal_found((openModal_found) => !openModal_found);
     }
 
-    setIsLoading((isLoading) => false);
+    setIsLoading((isLoading) => !isLoading);
   }
 
   async function onCheckInHandler(
     value: z.infer<typeof checkinFormSchema>
   ): Promise<void> {
-    console.log(value);
+    setIsLoading((isLoading) => !isLoading);
     const { embarkation_temp } = value;
     const checkInData = {
-      ticketCode: "BYRY9-00003",
+      ticketCode: participantData.ticketCode,
       embarkation_temp: embarkation_temp,
-      embarkation_status: "your_value_here",
+      embarkation_status: "CheckedIn",
     };
 
     const data = await checkInParticipant(checkInData);
-    console.log(data);
+
+    if (data) {
+      setOpenModal_found((openModal_found) => false);
+    }
+
+    setIsLoading((isLoading) => !isLoading);
     //update temperature
     //assign to bus
     //redirect to checked-in

@@ -4,8 +4,14 @@ import { NextResponse } from "next/server";
 
 export async function PATCH(request: Request) {
   const body = await request.json();
-  const { ticketCode, embarkation_status, embarkation_temp } = body;
+  const {
+    ticketCode,
+    embarkation_status,
+    embarkation_temp,
+    embarkation_checkInTime,
+  } = body.params;
 
+  console.log("PATCH REQUEST FOR TICKET " + ticketCode);
   try {
     const updateParticipant = await prisma.participant.update({
       where: {
@@ -14,6 +20,7 @@ export async function PATCH(request: Request) {
       data: {
         embarkation_status,
         embarkation_temp,
+        embarkation_checkInTime,
       },
     });
 

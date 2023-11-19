@@ -54,7 +54,7 @@ model Participant {
   //Embarkation from Center details
   embarkation_temp        String?
   embarkation_status      EmbarkationStatus @default(Awaiting)
-  embarkation_checkInTime DateTime?         @default(now())
+  embarkation_checkInTime String?        
 
   rideToVenue         String?
   rideToVenue_Id      String?  @db.ObjectId

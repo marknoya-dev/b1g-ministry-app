@@ -84,12 +84,27 @@ export async function checkInParticipant(body: {
 }): Promise<any> {
   const { ticketCode, embarkation_temp, embarkation_status } = body;
 
+  const now = new Date();
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  };
+
+  const formattedNowDate = now.toLocaleString("en-US", options);
+
   if (API_URL) {
-    const data = axios
+    const data = await axios
       .patch(`${API_URL}/api/participants/update/`, {
-        ticketCode,
-        embarkation_temp,
-        embarkation_status,
+        params: {
+          ticketCode,
+          embarkation_temp,
+          embarkation_status,
+          embarkation_checkInTime: formattedNowDate,
+        },
       })
       .then(function (res) {
         console.log(res);
@@ -97,9 +112,5 @@ export async function checkInParticipant(body: {
       .catch(function (err) {
         console.log(err);
       });
-
-    const r = await data;
-
-    return data;
   } else return null;
 }
