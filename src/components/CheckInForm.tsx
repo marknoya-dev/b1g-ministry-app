@@ -1,11 +1,15 @@
 "use client";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useMaskito } from "@maskito/react";
 import type { MaskitoOptions } from "@maskito/core";
 import { Button } from "@/components/ui/button";
 import { getParticipantData } from "@/lib/api";
+import { Input } from "@/components/ui/input";
+import { useMaskito } from "@maskito/react";
+import { useRouter } from "next/navigation";
+import { Participant } from "@/lib/types";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 import {
   Form,
@@ -16,19 +20,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Participant } from "@/lib/types";
-import { useState } from "react";
-import { redirect } from "next/navigation";
-import { useRouter } from "next/navigation";
 
 const ticketCodeForm = z.object({
   ticketCode: z
