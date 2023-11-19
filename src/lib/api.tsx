@@ -1,12 +1,12 @@
 import { Participant, Bus } from "./types";
-
+import fetch, { Response } from "node-fetch";
 const dotenvExpand = require("dotenv-expand");
 const expanded = dotenvExpand.expand({ parsed: { ...process.env } });
 
 const API_URL = expanded.parsed.NEXT_PUBLIC_URL;
 
 export async function getParticipantsData(): Promise<Participant[]> {
-  const res = await fetch(`${API_URL}/api/participants`);
+  const res: any = await fetch(`${API_URL}/api/participants`);
 
   if (!res.ok) {
     throw new Error("Failed to fetch data");
@@ -24,7 +24,8 @@ export async function getParticipantData(
     throw new Error(`Failed to fetch data + ${res.status}`);
   }
 
-  const data: Participant = await res.json();
+  const data: any = await res.json();
+
   return data;
 }
 
