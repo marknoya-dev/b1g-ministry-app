@@ -9,11 +9,10 @@ import CapacityCard from "@/components/CapacityCard";
 import DataTable from "@/components/DataTable";
 import { columns } from "@/lib/columns";
 import { getParticipantsData, getAllBusData, API_URL } from "@/lib/api";
-import { useState } from "react";
 
 export default async function Home() {
   if (!API_URL) {
-    return null;
+    return <div>API_URL NOT DETECTED</div>;
   }
 
   const [buses, participants] = await Promise.all([
@@ -42,7 +41,7 @@ export default async function Home() {
                   label={bus.name}
                   key={bus.name}
                   value={bus.currCapacity}
-                  max={40}
+                  max={bus.maxCapacity}
                 />
               ))}
             </div>

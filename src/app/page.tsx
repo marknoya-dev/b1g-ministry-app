@@ -14,7 +14,6 @@ export default function Home() {
       </div>
       <Link href="/embarkation">
         <Button>Go to Embarkation</Button>
-        <Progress value={100} />
       </Link>
     </main>
   );

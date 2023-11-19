@@ -6,7 +6,6 @@ export const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
 export async function getParticipantsData(): Promise<Participant[]> {
   if (API_URL) {
     const res: any = await fetch(`${API_URL}/api/participants/all`);
-    console.log(`${API_URL}/api/participants/all`);
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
