@@ -11,6 +11,10 @@ import { columns } from "@/lib/columns";
 import { getParticipantsData, getBusData, API_URL } from "@/lib/api";
 
 export default async function Home() {
+  if (!API_URL) {
+    return null;
+  }
+
   const [buses, participants] = await Promise.all([
     getBusData(),
     getParticipantsData(),
