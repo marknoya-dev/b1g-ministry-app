@@ -1,17 +1,5 @@
 import React from "react";
-import { Participant } from "@prisma/client";
-
-async function getParticipantData(ticketCode: string): Promise<Participant> {
-  const API_URL = process.env.API_URL;
-  const res = await fetch(`${API_URL}/api/participants/${ticketCode}`);
-
-  if (!res.ok) {
-    throw new Error(`Failed to fetch data + ${res.status}`);
-  }
-
-  const data: Participant = await res.json();
-  return data;
-}
+import { getParticipantData } from "@/lib/api";
 
 export default async function Page(url: { params: { id: string } }) {
   const { id } = url.params;

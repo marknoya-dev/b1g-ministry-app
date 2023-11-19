@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useMaskito } from "@maskito/react";
 import type { MaskitoOptions } from "@maskito/core";
 import { Button } from "@/components/ui/button";
+import { getParticipantData } from "@/lib/api";
 
 import {
   Form,
@@ -59,18 +60,6 @@ const ticketCodeMask: MaskitoOptions = {
 const temperatureMask: MaskitoOptions = {
   mask: [/\d/, /\d/],
 };
-
-async function getParticipantData(ticketCode: string): Promise<Participant> {
-  const API_URL = process.env.API_URL;
-  const res = await fetch(`${API_URL}/api/participants/${ticketCode}`);
-
-  if (!res.ok) {
-    throw new Error(`Failed to fetch data + ${res.status}`);
-  }
-
-  const data: Participant = await res.json();
-  return data;
-}
 
 export function CheckInForm(onSubmit: any) {
   const router = useRouter();

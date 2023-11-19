@@ -5,69 +5,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
 import CapacityCard from "@/components/CapacityCard";
 import DataTable from "@/components/DataTable";
 import { columns } from "@/lib/columns";
-import { Participant, Bus } from "@/lib/types";
-
-async function getParticipantsData(): Promise<Participant[]> {
-  const API_URL = process.env.API_URL;
-  console.log(`${API_URL}/api/participants`);
-  const res = await fetch(`${API_URL}/api/participants`);
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
-}
-
-async function getBusData(): Promise<Bus[]> {
-  // Fetch data from your API here.
-  return [
-    {
-      busName: "Bus 1",
-      maxCapacity: 40,
-      currCapacity: 0,
-    },
-    {
-      busName: "Bus 2",
-      maxCapacity: 40,
-      currCapacity: 4,
-    },
-    {
-      busName: "Bus 3",
-      maxCapacity: 40,
-      currCapacity: 0,
-    },
-    {
-      busName: "Bus 4",
-      maxCapacity: 40,
-      currCapacity: 0,
-    },
-    {
-      busName: "Bus 5",
-      maxCapacity: 40,
-      currCapacity: 0,
-    },
-    {
-      busName: "Bus 6",
-      maxCapacity: 40,
-      currCapacity: 0,
-    },
-    {
-      busName: "Bus 7",
-      maxCapacity: 40,
-      currCapacity: 0,
-    },
-    {
-      busName: "Bus 8",
-      maxCapacity: 40,
-      currCapacity: 0,
-    },
-  ];
-}
+import { getParticipantsData, getBusData } from "@/lib/api";
 
 export default async function Home() {
   const [buses, participants] = await Promise.all([
