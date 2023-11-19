@@ -3,37 +3,40 @@ import { Participant, Bus } from "./types";
 const dotenvExpand = require("dotenv-expand");
 const expanded = dotenvExpand.expand({ parsed: { ...process.env } });
 
-let API_URL = "";
-if (expanded.parsed.VERCEL_ENV === "production" || "preview") {
-  API_URL = `https://` + expanded.parsed.NEXT_PUBLIC_URL;
-} else {
-  API_URL = expanded.parsed.NEXT_PUBLIC_URL;
-}
+// let API_URL = "";
+// if (expanded.parsed.VERCEL_URL === "production" || "preview") {
+//   API_URL = `https://` + expanded.parsed.VERCEL_URL;
+// } else {
+//   API_URL = expanded.parsed.NEXT_PUBLIC_API_URL;
+// }
 
-export async function getParticipantsData(): Promise<Participant[]> {
-  console.log(expanded.parsed.VERCEL_ENV);
+export const API_URL = expanded.parsed.NEXT_PUBLIC_API_URL;
+
+export async function getParticipantsData(): Promise<any> {
   console.log(API_URL);
+  console.log(expanded.parsed);
 
-  // console.group(expanded.parsed);
-  const res: any = await fetch(`${API_URL}/api/participants`);
+  if (API_URL) {
+    const res: any = await fetch(`${API_URL}/api/participants`);
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
 
-  return res.json();
+    return res.json();
+  } else return null;
 }
 
-export async function getParticipantData(
-  ticketCode: string
-): Promise<Participant> {
+export async function getParticipantData(ticketCode: string): Promise<any> {
   const res: any = await fetch(`${API_URL}/api/participants/${ticketCode}`);
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch data + ${res.status}`);
-  }
+  if (API_URL) {
+    if (!res.ok) {
+      throw new Error(`Failed to fetch data + ${res.status}`);
+    }
 
-  return res.json();
+    return res.json();
+  } else return null;
 }
 
 export async function getBusData(): Promise<Bus[]> {

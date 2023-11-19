@@ -8,7 +8,7 @@ import {
 import CapacityCard from "@/components/CapacityCard";
 import DataTable from "@/components/DataTable";
 import { columns } from "@/lib/columns";
-import { getParticipantsData, getBusData } from "@/lib/api";
+import { getParticipantsData, getBusData, API_URL } from "@/lib/api";
 
 export default async function Home() {
   const [buses, participants] = await Promise.all([
@@ -48,7 +48,10 @@ export default async function Home() {
             <CardTitle className="text-lg">All Participants</CardTitle>
           </CardHeader>
           <CardContent>
-            <DataTable columns={columns} data={participants} />
+            {/* <DataTable
+              columns={columns}
+              data={participants ? participants : null}
+            /> */}
           </CardContent>
         </Card>
       </div>
