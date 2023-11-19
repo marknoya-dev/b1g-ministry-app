@@ -20,6 +20,7 @@ export default async function Home() {
     getParticipantsData(),
   ]);
 
+  console.log(participants);
   return (
     <main>
       <h1 className="text-[24px] font-bold mb-[16px] text-gray-700">
