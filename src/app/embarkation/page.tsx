@@ -11,7 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export async function getParticipantsData(): Promise<Participant[]> {
+async function getParticipantsData(): Promise<Participant[]> {
   if (API_URL) {
     const res: any = await fetch(`${API_URL}/api/participants/all`);
     if (!res.ok) {
