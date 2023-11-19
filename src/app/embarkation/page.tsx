@@ -1,4 +1,5 @@
-import { getParticipantsData, getAllBusData, API_URL } from "@/lib/api";
+import { getAllBusData, API_URL } from "@/lib/api";
+import { Participant } from "@/lib/types";
 import CapacityCard from "@/components/CapacityCard";
 import DataTable from "@/components/DataTable";
 import { columns } from "@/lib/columns";
@@ -9,6 +10,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
+export async function getParticipantsData(): Promise<Participant[]> {
+  if (API_URL) {
+    const res: any = await fetch(`${API_URL}/api/participants/all`);
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+
+    return res.json();
+  } else return [];
+}
 
 export default async function Home() {
   if (!API_URL) {
