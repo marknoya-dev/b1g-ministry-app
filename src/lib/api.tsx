@@ -3,8 +3,8 @@ import { Participant, Bus } from "./types";
 const dotenvExpand = require("dotenv-expand");
 const expanded = dotenvExpand.expand({ parsed: { ...process.env } });
 
-// let API_URL = "";
-// if (expanded.parsed.VERCEL_URL === "production" || "preview") {
+// export let API_URL = "";
+// if (expanded.parsed.VERCEL_ENV === "production" || "preview") {
 //   API_URL = `https://` + expanded.parsed.VERCEL_URL;
 // } else {
 //   API_URL = expanded.parsed.NEXT_PUBLIC_API_URL;
