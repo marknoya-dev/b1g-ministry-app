@@ -1,6 +1,5 @@
+export const dynamic = "force-dynamic";
 export const revalidate = true;
-import { revalidatePath } from "next/cache";
-revalidatePath("/embarkation");
 
 import { getAllBusData, API_URL } from "@/lib/api";
 import { Participant } from "@/lib/types";
