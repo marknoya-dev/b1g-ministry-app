@@ -1,10 +1,11 @@
+import axios from "axios";
 import { Participant, Bus } from "./types";
 
 export const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
 
 export async function getParticipantsData(): Promise<any> {
   if (API_URL) {
-    const res: any = await fetch(`${API_URL}/api/participants`);
+    const res: any = await fetch(`${API_URL}/api/participants/all`);
 
     if (!res.ok) {
       throw new Error("Failed to fetch data");
@@ -74,4 +75,31 @@ export async function getBusData(): Promise<Bus[]> {
       currCapacity: 0,
     },
   ];
+}
+
+export async function checkInParticipant(body: {
+  ticketCode: string;
+  embarkation_temp: string;
+  embarkation_status: string;
+}): Promise<any> {
+  const { ticketCode, embarkation_temp, embarkation_status } = body;
+
+  if (API_URL) {
+    const data = axios
+      .patch(`${API_URL}/api/participants/update/`, {
+        ticketCode,
+        embarkation_temp,
+        embarkation_status,
+      })
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+
+    const r = await data;
+
+    return data;
+  } else return null;
 }

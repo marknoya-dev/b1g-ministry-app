@@ -3,7 +3,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { MaskitoOptions } from "@maskito/core";
 import { Button } from "@/components/ui/button";
-import { getParticipantData } from "@/lib/api";
+import { getParticipantData, checkInParticipant } from "@/lib/api";
 import { Input } from "@/components/ui/input";
 import { useMaskito } from "@maskito/react";
 import { useRouter } from "next/navigation";
@@ -36,8 +36,8 @@ const ticketCodeForm = z.object({
     .max(11),
 });
 
-const tempFormSchema = z.object({
-  tempInCelsius: z.string().max(2, { message: "Enter a valid temprature" }),
+const checkinFormSchema = z.object({
+  embarkation_temp: z.string().max(2, { message: "Enter a valid temprature" }),
 });
 
 const ticketCodeMask: MaskitoOptions = {
@@ -62,6 +62,7 @@ const temperatureMask: MaskitoOptions = {
 
 export function CheckInForm(onSubmit: any) {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const [openModal_notFound, setOpenModal_notFound] = useState(false);
   const [openModal_found, setOpenModal_found] = useState(false);
   const [participantData, setParticipantData] = useState({} as Participant);
@@ -74,18 +75,17 @@ export function CheckInForm(onSubmit: any) {
     },
   });
 
-  const temperatureCheckForm = useForm<z.infer<typeof tempFormSchema>>({
-    resolver: zodResolver(tempFormSchema),
-    defaultValues: {
-      tempInCelsius: "36",
-    },
+  const checkInCheckForm = useForm<z.infer<typeof checkinFormSchema>>({
+    resolver: zodResolver(checkinFormSchema),
   });
+
+  //ADD ISCHECKEDIN HANDLER
 
   async function checkTicketHandler(
     values: z.infer<typeof ticketCodeForm>
   ): Promise<void> {
+    setIsLoading((isLoading) => true);
     const data = await getParticipantData(values.ticketCode);
-
     const participant = (data as { participant?: Participant })?.participant;
 
     if (!participant) {
@@ -94,12 +94,23 @@ export function CheckInForm(onSubmit: any) {
       setParticipantData(participant);
       setOpenModal_found((openModal_found) => true);
     }
+
+    setIsLoading((isLoading) => false);
   }
 
-  async function checkInHandler(
-    value: z.infer<typeof tempFormSchema>
+  async function onCheckInHandler(
+    value: z.infer<typeof checkinFormSchema>
   ): Promise<void> {
     console.log(value);
+    const { embarkation_temp } = value;
+    const checkInData = {
+      ticketCode: "BYRY9-00003",
+      embarkation_temp: embarkation_temp,
+      embarkation_status: "your_value_here",
+    };
+
+    const data = await checkInParticipant(checkInData);
+    console.log(data);
     //update temperature
     //assign to bus
     //redirect to checked-in
@@ -139,8 +150,12 @@ export function CheckInForm(onSubmit: any) {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full">
-            Submit
+          <Button
+            type="submit"
+            className={`w-full ${isLoading ? "cursor-wait" : "cursor-pointer"}`}
+            disabled={isLoading}
+          >
+            {isLoading ? "Loading..." : "Submit"}
           </Button>
         </form>
       </Form>
@@ -160,18 +175,18 @@ export function CheckInForm(onSubmit: any) {
       <Dialog open={openModal_found} onOpenChange={setOpenModal_found}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{`Hi, ${participantData?.nickname}!`}</DialogTitle>
+            <DialogTitle className="text-2xl mb-2s">{`Hi, ${participantData?.nickname}!`}</DialogTitle>
             <DialogDescription>
               {`Are you ready to commit? Before we give your bus assignment we need to make sure everyone's safe and sound for the retreat`}
             </DialogDescription>
-            <Form {...temperatureCheckForm}>
+            <Form {...checkInCheckForm}>
               <form
-                onSubmit={temperatureCheckForm.handleSubmit(checkInHandler)}
+                onSubmit={checkInCheckForm.handleSubmit(onCheckInHandler)}
                 className="space-y-8"
               >
                 <FormField
-                  control={temperatureCheckForm.control}
-                  name="tempInCelsius"
+                  control={checkInCheckForm.control}
+                  name="embarkation_temp"
                   render={({ field }) => (
                     <FormItem className="mt-4">
                       <FormLabel>{`Temparature (°C)`}</FormLabel>
@@ -181,8 +196,8 @@ export function CheckInForm(onSubmit: any) {
                           maxLength={2}
                           ref={mask_Temperature}
                           onInput={(evt) => {
-                            temperatureCheckForm.setValue(
-                              "tempInCelsius",
+                            checkInCheckForm.setValue(
+                              "embarkation_temp",
                               evt.currentTarget.value
                             );
                           }}
@@ -197,8 +212,14 @@ export function CheckInForm(onSubmit: any) {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full">
-                  Submit
+                <Button
+                  type="submit"
+                  className={`w-full ${
+                    isLoading ? "cursor-wait" : "cursor-pointer"
+                  }`}
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Loading..." : "Submit"}
                 </Button>
               </form>
             </Form>
