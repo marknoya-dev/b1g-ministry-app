@@ -13,6 +13,7 @@ import { Participant, Bus } from "@/lib/types";
 
 async function getParticipantsData(): Promise<Participant[]> {
   const API_URL = process.env.API_URL;
+  console.log(`${API_URL}/api/participants`);
   const res = await fetch(`${API_URL}/api/participants`);
 
   if (!res.ok) {

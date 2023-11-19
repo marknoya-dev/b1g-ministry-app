@@ -37,7 +37,11 @@ export const columns: ColumnDef<Participant>[] = [
     header: "Ticket",
     cell: ({ row }) => {
       const ticketCode: string = row.getValue("ticketCode");
-      return ticketCode.slice(10);
+      return (
+        <div className="whitespace-nowrap text-ellipsis w-full">
+          {ticketCode}
+        </div>
+      );
     },
   },
   {
