@@ -57,6 +57,7 @@ model Participant {
   embarkation_checkInTime String?
 
   rideToVenue         String?
+  rideToVenue_name    String?
   rideToVenue_Id      String?  @db.ObjectId
   rideToVenue_carpool Carpool? @relation("toVenue_carpool", fields: [rideToVenue_Id], references: [id], onUpdate: NoAction, onDelete: NoAction)
   rideToVenue_bus     Bus?     @relation("toVenue_bus", fields: [rideToVenue_Id], references: [id])

@@ -22,6 +22,7 @@ export type Participant = {
   embarkation_checkInTime?: Date;
 
   rideToVenue?: string;
+  rideToVenue_name?: string;
   rideToVenue_Id?: string;
 
   rideFromVenue?: string;

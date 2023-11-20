@@ -21,7 +21,6 @@ export async function GET(
       });
     } else return NextResponse.json({ participant, status: 200 });
   } catch (error) {
-    console.error("Error fetching participants:", error);
     return NextResponse.json(
       { message: "Could not fetch participants", error },
       { status: 500 }

@@ -112,11 +112,11 @@ export const columns: ColumnDef<Participant>[] = [
     },
   },
   {
-    accessorKey: "rideToVenue_name",
+    accessorKey: "rideToVenue_Id",
     header: "Vehicle",
     size: 120,
     cell: ({ row }) => {
-      const vehicle = row.getValue("rideToVenue_name");
+      const vehicle = row.getValue("rideToVenue_Id");
 
       return vehicle ? (
         vehicle

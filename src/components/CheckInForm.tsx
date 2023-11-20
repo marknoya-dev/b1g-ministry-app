@@ -64,7 +64,7 @@ export function CheckInForm(onSubmit: any) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [openModal_notFound, setOpenModal_notFound] = useState(false);
-  const [openModal_found, setOpenModal_found] = useState(false);
+  const [openModal_checkIn, setOpenModal_checkIn] = useState(false);
   const [participantData, setParticipantData] = useState({} as Participant);
   const mask_TicketCode = useMaskito({ options: ticketCodeMask });
   const mask_Temperature = useMaskito({ options: temperatureMask });
@@ -92,7 +92,7 @@ export function CheckInForm(onSubmit: any) {
       setOpenModal_notFound((openModal_notFound) => !openModal_notFound);
     } else {
       setParticipantData(participant);
-      setOpenModal_found((openModal_found) => !openModal_found);
+      setOpenModal_checkIn((openModal_checkIn) => !openModal_checkIn);
     }
 
     setIsLoading((isLoading) => !isLoading);
@@ -106,19 +106,17 @@ export function CheckInForm(onSubmit: any) {
     const checkInData = {
       ticketCode: participantData.ticketCode,
       embarkation_temp: embarkation_temp,
-      embarkation_status: "CheckedIn",
     };
 
     const data = await checkInParticipant(checkInData);
 
     if (data) {
-      setOpenModal_found((openModal_found) => false);
+      setOpenModal_checkIn((openModal_checkIn) => !openModal_checkIn);
+      const url = `/embarkation/welcome/${participantData.ticketCode}`;
+      router.push(url);
     }
 
     setIsLoading((isLoading) => !isLoading);
-    //update temperature
-    //assign to bus
-    //redirect to checked-in
   }
 
   return (
@@ -177,7 +175,7 @@ export function CheckInForm(onSubmit: any) {
         </DialogContent>
       </Dialog>
 
-      <Dialog open={openModal_found} onOpenChange={setOpenModal_found}>
+      <Dialog open={openModal_checkIn} onOpenChange={setOpenModal_checkIn}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="text-2xl mb-2s">{`Hi, ${participantData?.nickname}!`}</DialogTitle>
