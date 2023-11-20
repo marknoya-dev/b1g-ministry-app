@@ -1,7 +1,7 @@
 // url: /api/participants
 import prisma from "@/lib/db";
-import { redirect } from "next/dist/server/api-utils";
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 
 const now = new Date();
 const options: Intl.DateTimeFormatOptions = {
@@ -60,6 +60,8 @@ export async function PATCH(request: Request) {
           rideToVenue_name: updateBus.name,
         },
       });
+
+      revalidatePath("/embarkation");
       return NextResponse.json(updateParticipant, { status: 200 });
     }
   } catch (error) {

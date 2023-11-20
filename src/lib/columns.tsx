@@ -92,7 +92,7 @@ export const columns: ColumnDef<Participant>[] = [
   },
   {
     accessorKey: "rideToVenue_name",
-    header: "Vehicle",
+    header: "Bus #",
     size: 120,
     cell: ({ row }) => {
       const vehicle = row.getValue("rideToVenue_name");

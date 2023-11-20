@@ -15,6 +15,9 @@ export default function Home() {
       <Link href="/embarkation">
         <Button>Go to Embarkation</Button>
       </Link>
+      <Link href="/embarkation/check-in">
+        <Button>Go to Participants Check-in</Button>
+      </Link>
     </main>
   );
 }
