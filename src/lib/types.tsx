@@ -21,7 +21,7 @@ export type Participant = {
   embarkation_status: EmbarkationStatus;
   embarkation_checkInTime?: Date;
 
-  rideToVenue?: string;
+  rideToVenue: string;
   rideToVenue_name?: string;
   rideToVenue_Id?: string;
 

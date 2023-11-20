@@ -80,8 +80,9 @@ async function assignBus(ticketCode: string): Promise<any> {
 export async function checkInParticipant(body: {
   ticketCode: string;
   embarkation_temp: string;
+  rideToVenue: string;
 }): Promise<any> {
-  const { ticketCode, embarkation_temp } = body;
+  const { ticketCode, embarkation_temp, rideToVenue } = body;
 
   if (API_URL) {
     try {
@@ -90,10 +91,11 @@ export async function checkInParticipant(body: {
         {
           ticketCode,
           embarkation_temp,
+          rideToVenue,
         }
       );
       if (response.status === 200) {
-        console.log("participant checked-in");
+        return response.data;
       } else {
         throw new Error("Failed to fetch data");
       }

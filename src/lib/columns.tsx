@@ -58,7 +58,7 @@ export const columns: ColumnDef<Participant>[] = [
         </Button>
       );
     },
-    size: 250,
+    size: 230,
     accessorFn: (row) => `${row.firstName} ${row.lastName}`,
   },
   {
@@ -84,10 +84,24 @@ export const columns: ColumnDef<Participant>[] = [
   },
   {
     accessorKey: "rideToVenue",
-    header: "Vehicle to Venue",
+    header: "Ride to Venue",
     size: 150,
     cell: ({ row }) => {
       return <Badge variant="outline">{row.getValue("rideToVenue")}</Badge>;
+    },
+  },
+  {
+    accessorKey: "rideToVenue_name",
+    header: "Vehicle",
+    size: 120,
+    cell: ({ row }) => {
+      const vehicle = row.getValue("rideToVenue_name");
+
+      return vehicle ? (
+        vehicle
+      ) : (
+        <span className="text-slate-400">Unassigned</span>
+      );
     },
   },
   {
@@ -111,20 +125,7 @@ export const columns: ColumnDef<Participant>[] = [
       }
     },
   },
-  {
-    accessorKey: "rideToVenue_Id",
-    header: "Vehicle",
-    size: 120,
-    cell: ({ row }) => {
-      const vehicle = row.getValue("rideToVenue_Id");
 
-      return vehicle ? (
-        vehicle
-      ) : (
-        <span className="text-slate-400">Unassigned</span>
-      );
-    },
-  },
   {
     id: "actions",
     // header: "Action",

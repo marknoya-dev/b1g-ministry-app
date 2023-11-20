@@ -81,7 +81,7 @@ export function CheckInForm(onSubmit: any) {
 
   //ADD ISCHECKEDIN HANDLER
 
-  async function checkTicketHandler(
+  async function reviewParticipantDataHandler(
     values: z.infer<typeof ticketCodeForm>
   ): Promise<void> {
     setIsLoading((isLoading) => !isLoading);
@@ -106,16 +106,16 @@ export function CheckInForm(onSubmit: any) {
     const checkInData = {
       ticketCode: participantData.ticketCode,
       embarkation_temp: embarkation_temp,
+      rideToVenue: participantData.rideToVenue,
     };
 
     const data = await checkInParticipant(checkInData);
 
     if (data) {
-      setOpenModal_checkIn((openModal_checkIn) => !openModal_checkIn);
+      // setOpenModal_checkIn((openModal_checkIn) => !openModal_checkIn);
       const url = `/embarkation/welcome/${participantData.ticketCode}`;
       router.push(url);
     }
-
     setIsLoading((isLoading) => !isLoading);
   }
 
@@ -123,7 +123,7 @@ export function CheckInForm(onSubmit: any) {
     <div>
       <Form {...checkTicketForm}>
         <form
-          onSubmit={checkTicketForm.handleSubmit(checkTicketHandler)}
+          onSubmit={checkTicketForm.handleSubmit(reviewParticipantDataHandler)}
           className="space-y-8"
         >
           <FormField

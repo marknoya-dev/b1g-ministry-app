@@ -28,16 +28,17 @@
     "clsx": "^2.0.0",
     "cookie": "^0.6.0",
     "dotenv-cli": "^7.3.0",
+    "lottie-react": "^2.4.0",
     "lucide-react": "^0.292.0",
     "next": "14.0.2",
+    "prisma": "^5.6.0",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.48.2",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
     "vercel": "^32.5.5",
-    "zod": "^3.22.4",
-    "prisma": "^5.6.0"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/isomorphic-fetch": "^0.0.39",
