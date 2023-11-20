@@ -20,6 +20,7 @@ export async function getParticipantData(ticketCode: string): Promise<any> {
   if (API_URL) {
     const res: any = await fetch(`${API_URL}/api/participants/${ticketCode}`, {
       method: "GET",
+      cache: "no-store",
       headers: {
         "Content-Type": "application/json",
       },
@@ -36,7 +37,9 @@ export async function getParticipantData(ticketCode: string): Promise<any> {
 
 export async function getAllBusData(): Promise<Bus[]> {
   if (API_URL) {
-    const res: any = await fetch(`${API_URL}/api/bus/all`);
+    const res: any = await fetch(`${API_URL}/api/bus/all`, {
+      cache: "no-store",
+    });
 
     if (!res.ok) {
       throw new Error(`Failed to fetch data + ${res.status}`);
