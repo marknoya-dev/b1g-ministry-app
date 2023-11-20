@@ -33,7 +33,7 @@ export default async function Page({
   } else {
     return (
       <main className="text-center px-40">
-        <div className="absolute w-full top-0 left-0 pointer-events-none">
+        <div className="fixed w-full h-screen top-0 left-0 pointer-events-none">
           <LottieAnimation />
         </div>
         <div>
@@ -41,7 +41,7 @@ export default async function Page({
             Welcome to B1G Commit, {participant.nickname}!
           </h1>
           <div className="text-[16px] font-normal mt-[2px] text-gray-600">
-            {`Here's everything you need to know about your stay at B1G Commit`}
+            {`Here's everything you need to know about your stay at the retreat`}
           </div>
         </div>
         <div className="flex flex-col justify-center align-middle items-center gap-4 mt-8">
