@@ -8,7 +8,7 @@ export async function getParticipantsData(): Promise<Participant[]> {
   if (API_URL) {
     const res: any = await fetch(`${API_URL}/api/participants/all`, {
       cache: "no-cache",
-      next: { revalidate: 0 },
+      // next: { revalidate: 10 },
     });
     if (!res.ok) {
       throw new Error("Failed to fetch data");
@@ -22,7 +22,8 @@ export async function getParticipantData(ticketCode: string): Promise<any> {
   if (API_URL) {
     const res: any = await fetch(`${API_URL}/api/participants/${ticketCode}`, {
       method: "GET",
-      cache: "no-store",
+      cache: "no-cache",
+      // next: { revalidate: 10 },
       headers: {
         "Content-Type": "application/json",
       },
@@ -40,7 +41,8 @@ export async function getParticipantData(ticketCode: string): Promise<any> {
 export async function getAllBusData(): Promise<Bus[]> {
   if (API_URL) {
     const res: any = await fetch(`${API_URL}/api/bus/all`, {
-      cache: "no-store",
+      cache: "no-cache",
+      // next: { revalidate: 10 },
     });
 
     if (!res.ok) {
