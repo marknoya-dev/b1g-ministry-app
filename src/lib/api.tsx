@@ -41,8 +41,12 @@ export async function getParticipantData(ticketCode: string): Promise<any> {
 export async function getAllBusData(): Promise<Bus[]> {
   if (API_URL) {
     const res: any = await fetch(`${API_URL}/api/bus/all`, {
+      method: "GET",
       cache: "no-cache",
       // next: { revalidate: 10 },
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
     if (!res.ok) {

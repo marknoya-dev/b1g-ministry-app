@@ -1,5 +1,4 @@
 import { getParticipantsData, getAllBusData, API_URL } from "@/lib/api";
-import { Participant } from "@/lib/types";
 import CapacityCard from "@/components/CapacityCard";
 import DataTable from "@/components/DataTable";
 import { columns } from "@/lib/columns";

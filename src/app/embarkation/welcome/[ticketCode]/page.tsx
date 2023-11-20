@@ -24,10 +24,6 @@ export default async function Page({
   const participantData = await getParticipantData(ticketCode);
   const { participant } = participantData;
 
-  const backToCheckInHandler = () => {
-    redirect("/embarkation/check-in");
-  };
-
   if (participant.embarkation_status !== "CheckedIn") {
     redirect("/embarkation/check-in");
   } else {

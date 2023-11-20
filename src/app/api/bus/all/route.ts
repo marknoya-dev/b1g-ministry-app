@@ -1,8 +1,12 @@
+export const dynamic = "force-dynamic";
+
 import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 
 export async function GET() {
   try {
+    revalidatePath("/embarkation");
     const buses = await prisma.bus.findMany();
     return NextResponse.json(buses, { status: 200 });
   } catch (error) {
