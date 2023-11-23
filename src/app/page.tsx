@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Progress } from "@/components/ui/progress";
+
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-start gap-4 p-24">

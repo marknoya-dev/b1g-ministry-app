@@ -36,15 +36,19 @@ export default async function Home() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-4 grid-rows-2 gap-3">
-              {buses.map((bus) => (
-                <CapacityCard
-                  label={bus.name}
-                  key={bus.name}
-                  value={bus.currCapacity}
-                  max={bus.maxCapacity}
-                />
-              ))}
+            <div className="grid grid-rows-2 gap-3 grid-cols-1 md:grid-cols-4">
+              {buses ? (
+                buses.map((bus) => (
+                  <CapacityCard
+                    label={bus.name}
+                    key={bus.name}
+                    value={bus.currCapacity}
+                    max={bus.maxCapacity}
+                  />
+                ))
+              ) : (
+                <div>No buses detected.</div>
+              )}
             </div>
           </CardContent>
         </Card>

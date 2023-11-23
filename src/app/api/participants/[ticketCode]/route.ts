@@ -7,8 +7,10 @@ export async function GET(
 ) {
   try {
     const { ticketCode } = params;
-    const participant = await prisma.participant.findUnique({
+
+    const participant = await prisma.person.findUnique({
       where: {
+        role: "PARTICIPANT",
         ticketCode,
       },
     });
@@ -26,22 +28,4 @@ export async function GET(
       { status: 500 }
     );
   }
-}
-
-export async function PATCH(
-  request: Request,
-  { params }: { params: { ticketCode: string } }
-) {
-  try {
-    const body = await request.json();
-
-    const updateParticipant = await prisma.participant.update({
-      where: {
-        ticketCode: params.ticketCode,
-      },
-      data: {
-        embarkation_temp: "20",
-      },
-    });
-  } catch (error) {}
 }

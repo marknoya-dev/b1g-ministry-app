@@ -1,39 +1,15 @@
 "use client";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-
-import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
+import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Person } from "./types";
 import { Button } from "@/components/ui/button";
-import { Participant } from "./types";
+import EditBoardingDialog from "@/components/EditBoardingDialog";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-const columnHelper = createColumnHelper<Participant>();
-export const defaultColumnSizing = {
-  size: 150,
-  minSize: 20,
-  maxSize: Number.MAX_SAFE_INTEGER,
-};
-
-export const columns: ColumnDef<Participant>[] = [
+export const columns: ColumnDef<Person>[] = [
   {
     accessorKey: "ticketCode",
-    size: 140,
+    size: 200,
     header: "Ticket",
     cell: ({ row }) => {
       const ticketCode: string = row.getValue("ticketCode");
@@ -58,21 +34,32 @@ export const columns: ColumnDef<Participant>[] = [
         </Button>
       );
     },
-    size: 230,
+    size: 180,
     accessorFn: (row) => `${row.firstName} ${row.lastName}`,
+    cell: ({ row }) => {
+      return (
+        <div className="whitespace-nowrap text-ellipsis w-full overflow-hidden">
+          {row.original.firstName} {row.original.lastName}
+        </div>
+      );
+    },
   },
   {
-    accessorKey: "mobileNum",
+    accessorKey: "mobile",
     header: "Phone #",
-    size: 120,
-    cell: ({}) => {
-      return "09271418149";
+    size: 170,
+    cell: ({ row }) => {
+      return (
+        <div className="whitespace-nowrap overflow-hidden overflow-ellipsis">
+          {row.original.mobile}
+        </div>
+      );
     },
   },
   {
     accessorKey: "embarkation_temp",
     header: "Temp (°C)",
-    size: 100,
+    size: 120,
     cell: ({ row }) => {
       const temp = row.original.embarkation_temp;
       return temp ? (
@@ -84,16 +71,25 @@ export const columns: ColumnDef<Participant>[] = [
   },
   {
     accessorKey: "rideToVenue",
-    header: "Ride to Venue",
-    size: 150,
+    header: "Boarding",
+    size: 100,
     cell: ({ row }) => {
-      return <Badge variant="outline">{row.getValue("rideToVenue")}</Badge>;
+      const rideToVenue = row.original.rideToVenue;
+
+      switch (rideToVenue) {
+        case "Bus from CCF Center":
+          return <Badge variant="default">Bus</Badge>;
+          break;
+        case "Carpool":
+          return <Badge variant="secondary">Carpool</Badge>;
+          break;
+      }
     },
   },
   {
     accessorKey: "rideToVenue_name",
-    header: "Bus #",
-    size: 120,
+    header: "Vehicle",
+    size: 110,
     cell: ({ row }) => {
       const vehicle = row.getValue("rideToVenue_name");
 
@@ -107,17 +103,25 @@ export const columns: ColumnDef<Participant>[] = [
   {
     id: "embarkation_status",
     accessorKey: "embarkation_status",
-    size: 100,
+    size: 110,
     header: "Status",
     cell: ({ row }) => {
       const status = row.original.embarkation_status as string | undefined;
       switch (status) {
-        case "Awaiting":
+        case "PENDING":
           return <Badge variant="warning">Pending</Badge>;
           break;
 
-        case "CheckedIn":
+        case "IN_TRANSIT":
+          return <Badge variant="info">In Transit</Badge>;
+          break;
+
+        case "CHECKED_IN":
           return <Badge variant="success">Checked In</Badge>;
+          break;
+
+        case "ARRIVED":
+          return <Badge variant="success">Arrived</Badge>;
           break;
 
         default:
@@ -125,45 +129,18 @@ export const columns: ColumnDef<Participant>[] = [
       }
     },
   },
-
   {
     id: "actions",
-    // header: "Action",
-    size: 90,
+    header: "Actions",
+    size: 100,
     cell: ({ row }) => {
-      const participant = row.original;
-      const ticketCode: String = row.getValue("ticketCode");
       return (
-        <Dialog>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-2 w-14 px-1">
-                <span>Edit Info</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem>Change Boarding</DropdownMenuItem>
-              <DropdownMenuItem>
-                <DialogTrigger className="w-full flex items-start">
-                  View Profile
-                </DialogTrigger>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>{row.getValue("fullName")}</DialogTitle>
-              <DialogDescription>Profile</DialogDescription>
-            </DialogHeader>
-            <div className="flex flex-col">
-              <span className="text-gray-600 text-xs font-bold uppercase tracking-wide">
-                Ticket Code
-              </span>
-              <p className="text-gray-600">{ticketCode.slice(10)}</p>
-            </div>
-          </DialogContent>
-        </Dialog>
+        <EditBoardingDialog
+          rowData={row.original}
+          rideToVenue={row.original.rideToVenue}
+          rideToVenue_name={row.original.rideToVenue_name}
+          embarkation_status={row.original.embarkation_status}
+        />
       );
     },
   },

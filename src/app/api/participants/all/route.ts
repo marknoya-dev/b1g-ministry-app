@@ -5,9 +5,13 @@ import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 
 export async function GET() {
+  revalidatePath("/embarkation");
   try {
-    revalidatePath("/embarkation");
-    const participants = await prisma.participant.findMany();
+    const participants = await prisma.person.findMany({
+      where: {
+        role: "PARTICIPANT",
+      },
+    });
     return NextResponse.json(participants, { status: 200 });
   } catch (error) {
     return NextResponse.json(

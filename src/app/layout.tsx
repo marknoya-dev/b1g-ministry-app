@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/toaster";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
@@ -28,9 +29,10 @@ export default function RootLayout({
         )}
       >
         <Navbar />
-        <section className="px-[5%] md:px-[8%] max-w-[1800px] mx-auto mt-[60px] mb-[50px]">
+        <section className="px-[5%] md:px-[8%] max-w-[1800px] w-full mx-auto mt-[60px] mb-[50px]">
           {children}
         </section>
+        <Toaster />
       </body>
     </html>
   );

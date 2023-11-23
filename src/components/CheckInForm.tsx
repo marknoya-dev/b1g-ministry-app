@@ -7,7 +7,7 @@ import { getParticipantData, checkInParticipant } from "@/lib/api";
 import { Input } from "@/components/ui/input";
 import { useMaskito } from "@maskito/react";
 import { useRouter } from "next/navigation";
-import { Participant } from "@/lib/types";
+import { Person } from "@/lib/types";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 
@@ -32,16 +32,29 @@ import {
 const ticketCodeForm = z.object({
   ticketCode: z
     .string()
-    .min(11, { message: "Enter a valid ticket code" })
-    .max(11),
+    .min(21, { message: "Enter a valid ticket code" })
+    .max(21),
 });
 
 const checkinFormSchema = z.object({
-  embarkation_temp: z.string().max(2, { message: "Enter a valid temprature" }),
+  embarkation_temp: z
+    .string()
+    .min(2, { message: "Enter a valid temperature" })
+    .max(2),
 });
 
 const ticketCodeMask: MaskitoOptions = {
   mask: [
+    /\d/,
+    /\d/,
+    "-",
+    /[A-Za-z]/,
+    /[A-Za-z]/,
+    "-",
+    /[A-Za-z]/,
+    /\d/,
+    /\d/,
+    "-",
     /[A-Za-z0-9]/,
     /[A-Za-z0-9]/,
     /[A-Za-z0-9]/,
@@ -65,7 +78,7 @@ export function CheckInForm(onSubmit: any) {
   const [isLoading, setIsLoading] = useState(false);
   const [openModal_notFound, setOpenModal_notFound] = useState(false);
   const [openModal_checkIn, setOpenModal_checkIn] = useState(false);
-  const [participantData, setParticipantData] = useState({} as Participant);
+  const [participantData, setParticipantData] = useState({} as Person);
   const mask_TicketCode = useMaskito({ options: ticketCodeMask });
   const mask_Temperature = useMaskito({ options: temperatureMask });
   const checkTicketForm = useForm<z.infer<typeof ticketCodeForm>>({
@@ -79,20 +92,28 @@ export function CheckInForm(onSubmit: any) {
     resolver: zodResolver(checkinFormSchema),
   });
 
-  //ADD ISCHECKEDIN HANDLER
-
   async function reviewParticipantDataHandler(
     values: z.infer<typeof ticketCodeForm>
   ): Promise<void> {
     setIsLoading((isLoading) => !isLoading);
-    const data = await getParticipantData(values.ticketCode);
-    const participant = (data as { participant?: Participant })?.participant;
 
+    const data = await getParticipantData(values.ticketCode);
+    const participant = (data as { participant?: Person })?.participant;
+    //if participant is not found, open modal
     if (!participant) {
       setOpenModal_notFound((openModal_notFound) => !openModal_notFound);
     } else {
+      //if participant is found, set participant data
       setParticipantData(participant);
-      setOpenModal_checkIn((openModal_checkIn) => !openModal_checkIn);
+
+      //if participant si not checked in, open modal
+      if (participant?.embarkation_status !== "CHECKED_IN" || null) {
+        setOpenModal_checkIn((openModal_checkIn) => !openModal_checkIn);
+      } else {
+        //If participant is already checkedin, redirect to welcome page
+        const url = `/embarkation/welcome/${participant.ticketCode}`;
+        router.push(url);
+      }
     }
 
     setIsLoading((isLoading) => !isLoading);
@@ -102,21 +123,19 @@ export function CheckInForm(onSubmit: any) {
     value: z.infer<typeof checkinFormSchema>
   ): Promise<void> {
     setIsLoading((isLoading) => !isLoading);
+
     const { embarkation_temp } = value;
     const checkInData = {
       ticketCode: participantData.ticketCode,
       embarkation_temp: embarkation_temp,
       rideToVenue: participantData.rideToVenue,
     };
-
     const data = await checkInParticipant(checkInData);
 
     if (data) {
-      // setOpenModal_checkIn((openModal_checkIn) => !openModal_checkIn);
       const url = `/embarkation/welcome/${participantData.ticketCode}`;
       router.push(url);
     }
-    setIsLoading((isLoading) => !isLoading);
   }
 
   return (
@@ -135,7 +154,7 @@ export function CheckInForm(onSubmit: any) {
                 <FormControl>
                   <Input
                     className="uppercase text-4xl p-2 h-14 text-gray-900"
-                    maxLength={11}
+                    maxLength={21}
                     ref={mask_TicketCode}
                     onInput={(evt) => {
                       checkTicketForm.setValue(
@@ -143,11 +162,11 @@ export function CheckInForm(onSubmit: any) {
                         evt.currentTarget.value.toUpperCase()
                       );
                     }}
-                    placeholder="ex. KS931-00025"
+                    placeholder="ex. 23-EF-T14-KS931-00025"
                   />
                 </FormControl>
                 <FormDescription>
-                  Input the last 10 characters found on your ticket
+                  Input the ticket code sent to your email
                 </FormDescription>
                 <FormMessage />
               </FormItem>

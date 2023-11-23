@@ -1,12 +1,13 @@
-export type Participant = {
+export type Person = {
   id: string;
+  role: Role;
   ticketCode: string;
   firstName: string;
   lastName: string;
   nickname: string;
   gender: string;
   email: string;
-  mobileNum: string;
+  mobile: string;
   birthMonth: number;
   birthYear: number;
   civilStatus: string;
@@ -16,7 +17,9 @@ export type Participant = {
   contactPerson_mobile: string;
   contactPerson_relationship: string;
 
-  drivingFor?: string;
+  carpoolCar?: string;
+  carpoolRole?: string;
+
   embarkation_temp?: string;
   embarkation_status: EmbarkationStatus;
   embarkation_checkInTime?: Date;
@@ -25,8 +28,8 @@ export type Participant = {
   rideToVenue_name?: string;
   rideToVenue_Id?: string;
 
-  rideFromVenue?: string;
-  rideFromVenue_Id?: string;
+  // rideFromVenue?: string;
+  // rideFromVenue_Id?: string;
 
   medicalCondition?: string;
   foodRestriction?: string;
@@ -37,7 +40,8 @@ export type Participant = {
   workshop1: string;
   workshop2: string;
   teamName: string;
-  roomId?: string;
+  room: string;
+  devo: string;
 };
 
 type Month =
@@ -54,13 +58,11 @@ type Month =
   | "Nov"
   | "Dec";
 
-type CivilStatus = "Single" | "Married" | "Single Parent" | "Widow/Widower";
-
-type TransportationMode = "Bus" | "Car";
-
-type EmbarkationStatus = "Awaiting" | "Checked In" | "In Transit";
+type Role = "PARTICIPANT" | "VOLUNTEER";
+type EmbarkationStatus = "PENDING" | "CHECKED_IN" | "IN_TRANSIT" | "ARRIVED";
 
 export type Bus = {
+  id: string;
   name: string;
   maxCapacity: number;
   currCapacity: number;
