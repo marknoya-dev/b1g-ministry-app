@@ -1,3 +1,4 @@
+"use client";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -7,6 +8,7 @@ import { Bus } from "@/lib/types";
 import { Person } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import { clearCacheByPath, clearCacheByTag } from "@/lib/actions";
 
 import {
   Select,
@@ -39,21 +41,16 @@ async function populateAvailableBus(): Promise<any> {
 
 export default function EditBoardingForm({
   rowData,
-  rideToVenue,
-  rideToVenue_name,
-  embarkation_status,
   showModalControl,
 }: {
   rowData: Person;
-  rideToVenue: string;
-  rideToVenue_name: string | undefined;
-  embarkation_status?: string;
   showModalControl: any;
 }) {
   const editBoardingForm = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
 
+  const { rideToVenue, rideToVenue_name, embarkation_status } = rowData;
   const [availableBus, setAvailableBus] = useState<Bus[]>([]);
   const { toast } = useToast();
   const router = useRouter();
@@ -72,22 +69,12 @@ export default function EditBoardingForm({
   }, []);
 
   function onSubmitHandler(data: z.infer<typeof formSchema>) {
-    console.log(data);
     if (data.boarding) {
       console.log("Replace boarding", data?.boarding);
-      // updateParticipantVehicle({
-      //   ticketCode: rowData.ticketCode,
-      //   rideToVenue: rideToVenue,
-      //   rideToVenue_name: rideToVenue_name ? rideToVenue_name : "",
-      //   newVehicle: data.bus,
-      // });
     } else if (data.bus) {
-      console.log("replace vehicle", data?.bus);
       updateParticipantVehicle({
         updateType: "BUS_CHANGE",
         ticketCode: rowData.ticketCode,
-        rideToVenue: rideToVenue,
-        rideToVenue_name: rideToVenue_name ? rideToVenue_name : "",
         newVehicle: data.bus,
       });
     } else {
@@ -95,12 +82,13 @@ export default function EditBoardingForm({
     }
 
     showModalControl(false);
+    clearCacheByTag("embarkation-data");
+    router.refresh();
     toast({
       title: "Boarding information updated",
       description: "Boarding information has been updated successfully",
       duration: 2000,
     });
-    router.refresh();
   }
 
   return (

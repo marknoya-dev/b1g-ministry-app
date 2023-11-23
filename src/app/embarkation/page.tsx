@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 import { getParticipantsData, getAllBusData, API_URL } from "@/lib/api";
 import CapacityCard from "@/components/CapacityCard";
 import DataTable from "@/components/DataTable";
@@ -9,17 +12,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Bus, Person } from "@/lib/types";
+import { clearCacheByPath, clearCacheByTag } from "@/lib/actions";
 
-export const dynamic = "force-dynamic";
 export default async function Home() {
   if (!API_URL) {
     return null;
   }
 
-  const [buses, participants] = await Promise.all([
-    getAllBusData(),
-    getParticipantsData(),
-  ]);
+  const participants = await getParticipantsData();
+  const buses = await getAllBusData();
+
+  console.log("BUSES", buses);
 
   return (
     <main>
@@ -38,14 +42,17 @@ export default async function Home() {
           <CardContent>
             <div className="grid grid-rows-2 gap-3 grid-cols-1 md:grid-cols-4">
               {buses ? (
-                buses.map((bus) => (
-                  <CapacityCard
-                    label={bus.name}
-                    key={bus.name}
-                    value={bus.currCapacity}
-                    max={bus.maxCapacity}
-                  />
-                ))
+                buses
+                  .slice() // Create a shallow copy to avoid mutating the original array
+                  .sort((a, b) => a.name.localeCompare(b.name)) // Sort by bus name
+                  .map((bus) => (
+                    <CapacityCard
+                      label={bus.name}
+                      key={bus.name}
+                      value={bus.currCapacity}
+                      max={bus.maxCapacity}
+                    />
+                  ))
               ) : (
                 <div>No buses detected.</div>
               )}

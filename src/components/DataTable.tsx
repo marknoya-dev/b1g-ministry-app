@@ -24,6 +24,7 @@ import {
 
 import { DataTablePagination } from "@/components/ui/DataTablePagination";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

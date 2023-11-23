@@ -137,9 +137,9 @@ export const columns: ColumnDef<Person>[] = [
       return (
         <EditBoardingDialog
           rowData={row.original}
-          rideToVenue={row.original.rideToVenue}
-          rideToVenue_name={row.original.rideToVenue_name}
-          embarkation_status={row.original.embarkation_status}
+          // rideToVenue={row.original.rideToVenue}
+          // rideToVenue_name={row.original.rideToVenue_name}
+          // embarkation_status={row.original.embarkation_status}
         />
       );
     },

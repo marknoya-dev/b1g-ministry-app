@@ -6,7 +6,6 @@ import { revalidatePath } from "next/cache";
 
 export async function GET() {
   try {
-    revalidatePath("/embarkation");
     const buses = await prisma.bus.findMany();
     return NextResponse.json(buses, { status: 200 });
   } catch (error) {

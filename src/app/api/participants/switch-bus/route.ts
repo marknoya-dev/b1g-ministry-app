@@ -4,8 +4,8 @@ import { revalidatePath } from "next/cache";
 
 export async function PATCH(request: Request) {
   const body = await request.json();
-  const { ticketCode, rideToVenue_name: currVehicle, newVehicle } = body;
-
+  const { ticketCode, currVehicle, newVehicle } = body;
+  let updateParticipant;
   try {
     const currBusData = await prisma.bus.findUnique({
       where: {
@@ -16,7 +16,6 @@ export async function PATCH(request: Request) {
         currCapacity: true,
       },
     });
-
     const newBusData = await prisma.bus.findUnique({
       where: {
         name: newVehicle,
@@ -29,7 +28,7 @@ export async function PATCH(request: Request) {
     });
 
     if (currBusData) {
-      const updateCurrBus = await prisma.bus.update({
+      await prisma.bus.update({
         where: {
           id: currBusData.id,
         },
@@ -38,9 +37,8 @@ export async function PATCH(request: Request) {
         },
       });
     }
-
     if (newBusData) {
-      const updateNewBus = await prisma.bus.update({
+      await prisma.bus.update({
         where: {
           id: newBusData.id,
         },
@@ -49,7 +47,7 @@ export async function PATCH(request: Request) {
         },
       });
 
-      const updateParticipant = await prisma.person.update({
+      updateParticipant = await prisma.person.update({
         where: {
           role: "PARTICIPANT",
           ticketCode,
@@ -59,10 +57,8 @@ export async function PATCH(request: Request) {
           rideToVenue_name: newBusData.name,
         },
       });
-
-      revalidatePath("/embarkation", "page");
-      return NextResponse.json(updateParticipant, { status: 200 });
     }
+    return NextResponse.json(updateParticipant, { status: 200 });
   } catch (error) {
     console.error(error);
   }

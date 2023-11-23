@@ -22,14 +22,10 @@ import EditBoardingForm from "./EditBoardingForm";
 
 export default function EditBoardingDialog({
   rowData,
-  rideToVenue,
-  rideToVenue_name,
-  embarkation_status,
-}: {
+}: // embarkation_status,
+{
   rowData: Person;
-  rideToVenue: string;
-  rideToVenue_name: string | undefined;
-  embarkation_status: string;
+  // embarkation_status: string;
 }) {
   const fullName = rowData.firstName + " " + rowData.lastName;
   const status = rowData.embarkation_status as string | undefined;
@@ -67,13 +63,7 @@ export default function EditBoardingDialog({
           <DialogTitle>{fullName}</DialogTitle>
           <DialogDescription>Change boarding information</DialogDescription>
         </DialogHeader>
-        <EditBoardingForm
-          rowData={rowData}
-          rideToVenue={rideToVenue}
-          rideToVenue_name={rideToVenue_name ? rideToVenue_name : ""}
-          embarkation_status={embarkation_status}
-          showModalControl={setOpenModal}
-        />
+        <EditBoardingForm rowData={rowData} showModalControl={setOpenModal} />
       </DialogContent>
     </Dialog>
   );

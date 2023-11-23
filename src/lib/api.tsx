@@ -1,25 +1,27 @@
-export const dynamic = "force-dynamic";
+export const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
 
 import axios from "axios";
 import { Person, Bus } from "./types";
-import { revalidateTag } from "next/cache";
-
-export const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
 
 export async function getParticipantsData(): Promise<Person[]> {
-  revalidateTag("embarkation-data");
   if (API_URL) {
-    const res: any = await fetch(`${API_URL}/api/participants/all`, {
+    const res = await fetch(`${API_URL}/api/participants/all`, {
+      method: "GET",
       next: {
         tags: ["embarkation-data"],
       },
-      // cache: "no-cache",
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
 
-    return res.json();
+    const data = await res.json();
+
+    return data;
   } else return [];
 }
 
@@ -77,12 +79,10 @@ export async function switchCarpool(
 ): Promise<any> {}
 
 export async function switchBus(fromBus: string, toBus: string): Promise<any> {
-  revalidateTag("embarkation-data");
   if (API_URL) {
     const res = await axios
       .get(`${API_URL}/api/bus/${fromBus}`)
       .then((res) => {
-        console.log(res);
         return res.data;
       })
       .catch((err) => {
@@ -90,9 +90,8 @@ export async function switchBus(fromBus: string, toBus: string): Promise<any> {
       });
 
     if (res.ok) {
-      console.log(res);
+      return res.json();
     }
-    return res.json();
   } else {
     return null;
   }
@@ -100,44 +99,30 @@ export async function switchBus(fromBus: string, toBus: string): Promise<any> {
 
 export async function updateParticipantVehicle(body: {
   ticketCode: string; //PARTICIPANT TICKET
-  rideToVenue: string; //CARPOOL OR BUS
-  rideToVenue_name: string; //CARPOOL OR BUS NAME
   newVehicle: string; //NEW VEHICLE
   updateType: string; //CARPOOL_CHANGE OR BUS_CHANGE
 }): Promise<any> {
-  const { ticketCode, rideToVenue_name, rideToVenue, updateType, newVehicle } =
-    body;
+  const { ticketCode, updateType, newVehicle } = body;
 
   if (API_URL) {
     try {
-      if (updateType === "CARPOOL_CHANGE") {
-        //CHANGE CARPOOL VEHICLE
-      } else if (updateType === "BUS_CHANGE") {
-        console.log(
-          "updateParticipantVehicle",
-          ticketCode,
-          rideToVenue_name,
-          newVehicle
-        );
+      const req = await getParticipantData(ticketCode);
+      const { rideToVenue_name: currVehicle } = req.participant;
 
-        const updateParticipantVehicle = await axios.patch(
-          `${API_URL}/api/participants/switch-bus/`,
-          { ticketCode, rideToVenue_name, newVehicle }
-        );
+      if (req.status === 200) {
+        if (updateType === "CARPOOL_CHANGE") {
+          //CHANGE CARPOOL VEHICLE
+        } else if (updateType === "BUS_CHANGE") {
+          const updateParticipantVehicle = await axios.patch(
+            `${API_URL}/api/participants/switch-bus/`,
+            {
+              ticketCode,
+              currVehicle,
+              newVehicle,
+            }
+          );
+        }
       }
-
-      // const response = await axios.patch(
-      //   `${API_URL}/api/participants/change-vehicle/`,
-      //   {
-      //     ticketCode,
-      //     newVehicle,
-      //   }
-      // );
-      // if (response.status === 200) {
-      //   return response.data;
-      // } else {
-      //   throw new Error("Failed to fetch data");
-      // }
     } catch (error) {
       console.error(error);
     }
@@ -146,25 +131,24 @@ export async function updateParticipantVehicle(body: {
 
 export async function getAllBusData(): Promise<Bus[]> {
   if (API_URL) {
-    const res: any = await fetch(`${API_URL}/api/bus/all`, {
+    const res = await fetch(`${API_URL}/api/bus/all`, {
+      method: "GET",
       next: {
         tags: ["embarkation-data"],
       },
-      method: "GET",
-      // cache: "no-cache",
+      cache: "no-store",
       headers: {
         "Content-Type": "application/json",
       },
     });
 
-    if (!res.ok) {
-      throw new Error(`Failed to fetch data + ${res.status}`);
+    if (res.status === 200) {
+      const data = await res.json();
+      return data;
     }
-
-    return res.json();
-  } else {
-    return [];
   }
+
+  return [];
 }
 
 export async function getAvailableBus(): Promise<any> {
