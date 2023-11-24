@@ -24,7 +24,10 @@ import {
 
 import { DataTablePagination } from "@/components/ui/DataTablePagination";
 import { Input } from "@/components/ui/input";
-import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { clearCacheByPath, clearCacheByTag } from "@/lib/actions";
+import { getParticipantsData } from "@/lib/actions";
+import { Person } from "@/lib/types";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

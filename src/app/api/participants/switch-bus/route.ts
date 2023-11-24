@@ -1,6 +1,5 @@
 import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
 
 export async function PATCH(request: Request) {
   const body = await request.json();

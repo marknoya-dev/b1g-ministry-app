@@ -1,10 +1,7 @@
-export const dynamic = "force-dynamic";
-
 import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
 
-export async function GET() {
+export async function PUT() {
   try {
     const participants = await prisma.person.findMany({
       where: {

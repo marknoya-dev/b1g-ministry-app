@@ -2,7 +2,11 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { getAllAvailableBus, updateParticipantVehicle } from "@/lib/api";
+import {
+  getAllAvailableBus,
+  updateParticipantVehicle,
+  updateParticipantBoarding,
+} from "@/lib/api";
 import { useEffect, useRef, useState } from "react";
 import { Bus } from "@/lib/types";
 import { Person } from "@/lib/types";
@@ -69,20 +73,21 @@ export default function EditBoardingForm({
   }, []);
 
   function onSubmitHandler(data: z.infer<typeof formSchema>) {
-    if (data.boarding) {
-      console.log("Replace boarding", data?.boarding);
-    } else if (data.bus) {
+    if (data.bus) {
       updateParticipantVehicle({
-        updateType: "BUS_CHANGE",
         ticketCode: rowData.ticketCode,
         newVehicle: data.bus,
       });
-    } else {
-      console.log("No changes");
+    } else if (data.boarding) {
+      updateParticipantBoarding({
+        ticketCode: rowData.ticketCode,
+        newBoarding: data.boarding,
+      });
     }
 
     showModalControl(false);
     clearCacheByTag("embarkation-data");
+    clearCacheByPath("/embarkation");
     router.refresh();
     toast({
       title: "Boarding information updated",

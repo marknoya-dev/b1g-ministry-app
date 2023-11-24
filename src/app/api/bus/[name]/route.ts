@@ -12,6 +12,12 @@ export async function GET(
       where: {
         name,
       },
+      select: {
+        id: true,
+        maxCapacity: true,
+        currCapacity: true,
+        name: true,
+      },
     });
 
     if (!bus) {

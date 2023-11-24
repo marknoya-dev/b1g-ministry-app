@@ -134,14 +134,7 @@ export const columns: ColumnDef<Person>[] = [
     header: "Actions",
     size: 100,
     cell: ({ row }) => {
-      return (
-        <EditBoardingDialog
-          rowData={row.original}
-          // rideToVenue={row.original.rideToVenue}
-          // rideToVenue_name={row.original.rideToVenue_name}
-          // embarkation_status={row.original.embarkation_status}
-        />
-      );
+      return <EditBoardingDialog rowData={row.original} />;
     },
   },
 ];

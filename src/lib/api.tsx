@@ -1,4 +1,6 @@
 export const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
+// export const revalidate = 0;
+// export const fetchCache = "force-no-store";
 
 import axios from "axios";
 import { Person, Bus } from "./types";
@@ -6,11 +8,10 @@ import { Person, Bus } from "./types";
 export async function getParticipantsData(): Promise<Person[]> {
   if (API_URL) {
     const res = await fetch(`${API_URL}/api/participants/all`, {
-      method: "GET",
+      method: "PUT",
       next: {
         tags: ["embarkation-data"],
       },
-      cache: "no-store",
       headers: {
         "Content-Type": "application/json",
       },
@@ -23,6 +24,27 @@ export async function getParticipantsData(): Promise<Person[]> {
 
     return data;
   } else return [];
+}
+
+export async function getAllBusData(): Promise<Bus[]> {
+  if (API_URL) {
+    const res = await fetch(`${API_URL}/api/bus/all`, {
+      method: "PUT",
+      next: {
+        tags: ["embarkation-data"],
+      },
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (res.status === 200) {
+      const data = await res.json();
+      return data;
+    }
+  }
+
+  return [];
 }
 
 export async function getParticipantData(ticketCode: string): Promise<any> {
@@ -100,9 +122,8 @@ export async function switchBus(fromBus: string, toBus: string): Promise<any> {
 export async function updateParticipantVehicle(body: {
   ticketCode: string; //PARTICIPANT TICKET
   newVehicle: string; //NEW VEHICLE
-  updateType: string; //CARPOOL_CHANGE OR BUS_CHANGE
 }): Promise<any> {
-  const { ticketCode, updateType, newVehicle } = body;
+  const { ticketCode, newVehicle } = body;
 
   if (API_URL) {
     try {
@@ -110,18 +131,14 @@ export async function updateParticipantVehicle(body: {
       const { rideToVenue_name: currVehicle } = req.participant;
 
       if (req.status === 200) {
-        if (updateType === "CARPOOL_CHANGE") {
-          //CHANGE CARPOOL VEHICLE
-        } else if (updateType === "BUS_CHANGE") {
-          const updateParticipantVehicle = await axios.patch(
-            `${API_URL}/api/participants/switch-bus/`,
-            {
-              ticketCode,
-              currVehicle,
-              newVehicle,
-            }
-          );
-        }
+        const updateParticipantVehicle = await axios.patch(
+          `${API_URL}/api/participants/switch-bus/`,
+          {
+            ticketCode,
+            currVehicle,
+            newVehicle,
+          }
+        );
       }
     } catch (error) {
       console.error(error);
@@ -129,26 +146,29 @@ export async function updateParticipantVehicle(body: {
   }
 }
 
-export async function getAllBusData(): Promise<Bus[]> {
+export async function updateParticipantBoarding(body: {
+  ticketCode: string;
+  newBoarding: string;
+}): Promise<any> {
+  const { ticketCode, newBoarding } = body;
   if (API_URL) {
-    const res = await fetch(`${API_URL}/api/bus/all`, {
-      method: "GET",
-      next: {
-        tags: ["embarkation-data"],
-      },
-      cache: "no-store",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    try {
+      const req = await getParticipantData(ticketCode);
+      const { ticketCode: ticket } = req.participant;
 
-    if (res.status === 200) {
-      const data = await res.json();
-      return data;
+      if (req.status === 200) {
+        const updateParticipantVehicle = await axios.patch(
+          `${API_URL}/api/participants/switch-boarding/`,
+          {
+            ticketCode: ticket,
+            newBoarding,
+          }
+        );
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
-
-  return [];
 }
 
 export async function getAvailableBus(): Promise<any> {
@@ -179,11 +199,24 @@ export async function getAllAvailableBus(): Promise<any> {
   }
 }
 
-export async function updateBusData(busId: string): Promise<any> {
+export async function getBusData(busName: string): Promise<any> {
   if (API_URL) {
-    const response = await axios.patch(`${API_URL}/api/bus/update/`, {
+    const response = await fetch(`${API_URL}/api/bus/${busName}`);
+
+    const data = await response.json();
+    return data;
+  }
+}
+
+export async function updateBusCapacity(
+  name: string,
+  maxCapacity: number
+): Promise<any> {
+  if (API_URL) {
+    const response = await axios.patch(`${API_URL}/api/bus/update-capacity/`, {
       body: {
-        busId,
+        name,
+        maxCapacity,
       },
     });
   }

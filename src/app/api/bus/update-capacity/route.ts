@@ -2,8 +2,9 @@ import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
 
 export async function PATCH(req: Request) {
-  const body = await req.json();
-  const { name }: { name: string } = body;
+  const request = await req.json();
+  const { name, maxCapacity }: { name: string; maxCapacity: number } =
+    request.body;
 
   try {
     const updatedBus = await prisma.bus.update({
@@ -11,7 +12,7 @@ export async function PATCH(req: Request) {
         name,
       },
       data: {
-        currCapacity: 0,
+        maxCapacity,
       },
     });
 
