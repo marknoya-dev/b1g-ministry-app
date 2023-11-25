@@ -65,26 +65,10 @@ export default function DataTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn("fullName")?.setFilterValue(event.target.value)
           }
-          className="max-w-[200px]"
+          className="w-full"
         />
-        {/* {table.getColumn("embarkation_status") ? (
-          <Input
-            placeholder="Filter status"
-            value={
-              (table
-                .getColumn("embarkation_status")
-                ?.getFilterValue() as string) ?? ""
-            }
-            onChange={(event) =>
-              table
-                .getColumn("embarkation_status")
-                ?.setFilterValue(event.target.value)
-            }
-            className="max-w-[200px]"
-          />
-        ) : null} */}
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md border max-h-[250px] min-h-[250px] overflow-scroll overflow-x-hidden">
         <Table className="">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

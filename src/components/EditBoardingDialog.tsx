@@ -20,13 +20,7 @@ import {
 import { useState } from "react";
 import EditBoardingForm from "./EditBoardingForm";
 
-export default function EditBoardingDialog({
-  rowData,
-}: // embarkation_status,
-{
-  rowData: Person;
-  // embarkation_status: string;
-}) {
+export default function EditBoardingDialog({ rowData }: { rowData: Person }) {
   const fullName = rowData.firstName + " " + rowData.lastName;
   const status = rowData.embarkation_status as string | undefined;
   const boarding = rowData.rideToVenue;

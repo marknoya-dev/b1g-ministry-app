@@ -7,18 +7,9 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-
-import { Dispatch, SetStateAction, useState } from "react";
-import EditBoardingForm from "./EditBoardingForm";
+import { Dispatch, SetStateAction } from "react";
 
 export default function DialogTemplate({
   title,
@@ -33,8 +24,6 @@ export default function DialogTemplate({
   openModal: boolean;
   setOpenModal: Dispatch<SetStateAction<boolean>>;
 }) {
-  // const [openModal, setOpenModal] = useState(false);
-
   return (
     <Dialog open={openModal} onOpenChange={setOpenModal}>
       <DialogContent>

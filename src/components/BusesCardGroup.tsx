@@ -1,9 +1,7 @@
 "use client";
-
-import { getAllBusData, clearCacheByTag } from "@/lib/actions";
+export const dynamic = "force-dynamic";
 import CapacityCard from "./CapacityCard";
 import { Bus } from "@/lib/types";
-import { useEffect, useState } from "react";
 
 export default function BusesCardGroup({ buses }: { buses: Bus[] }) {
   return (

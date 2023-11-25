@@ -11,8 +11,8 @@ import { useEffect, useRef, useState } from "react";
 import { Bus } from "@/lib/types";
 import { Person } from "@/lib/types";
 import { Button } from "@/components/ui/button";
+import { revalidateTag } from "next/cache";
 import { useToast } from "@/components/ui/use-toast";
-import { clearCacheByPath, clearCacheByTag } from "@/lib/actions";
 
 import {
   Select,
@@ -72,7 +72,7 @@ export default function EditBoardingForm({
     fetchBusData();
   }, []);
 
-  function onSubmitHandler(data: z.infer<typeof formSchema>) {
+  async function onSubmitHandler(data: z.infer<typeof formSchema>) {
     if (data.bus) {
       updateParticipantVehicle({
         ticketCode: rowData.ticketCode,
@@ -86,8 +86,6 @@ export default function EditBoardingForm({
     }
 
     showModalControl(false);
-    clearCacheByTag("embarkation-data");
-    clearCacheByPath("/embarkation");
     router.refresh();
     toast({
       title: "Boarding information updated",

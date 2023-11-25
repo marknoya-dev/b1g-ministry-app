@@ -1,15 +1,13 @@
 "use client";
+export const dynamic = "force-dynamic";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { getBusData, updateBusCapacity } from "@/lib/api";
 import { SetStateAction, useEffect, useRef, useState } from "react";
 import { Bus } from "@/lib/types";
-import { Person } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { clearCacheByPath, clearCacheByTag } from "@/lib/actions";
-
 import {
   Form,
   FormControl,
@@ -20,8 +18,8 @@ import {
 } from "@/components/ui/form";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
-
 import { Dispatch } from "react";
+
 export default function BusSettingsForm({
   busName,
   maxCapacity,
@@ -61,24 +59,23 @@ export default function BusSettingsForm({
     resolver: zodResolver(formSchema),
   });
 
-  function onSubmitHandler(data: z.infer<typeof formSchema>) {
-    if (data.maxCapacity) {
+  async function onSubmitHandler(data: z.infer<typeof formSchema>) {
+    if (data.maxCapacity && data.maxCapacity >= busData.currCapacity) {
       updateBusCapacity(busName, data.maxCapacity);
       modalControl(false);
-      clearCacheByTag("embarkation-data");
-      clearCacheByPath("/embarkation");
-      router.refresh();
       toast({
         title: "Bus capacity updated",
         description: "Capacity has been updated successfully",
         duration: 2000,
       });
+
+      router.refresh();
     } else {
-      modalControl(false);
+      SettingsForm.setError("maxCapacity", {
+        message:
+          "Max capacity must be greater than current capacity and must not be negative",
+      });
     }
-    clearCacheByTag("embarkation-data");
-    clearCacheByPath("/embarkation");
-    router.refresh();
   }
 
   return (

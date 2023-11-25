@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { ButtonIcon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
 import { Settings2, ArrowBigRightDash } from "lucide-react";
 import DialogTemplate from "./DialogTemplate";
 import BusSettingsForm from "./BusSettingsForm";
+import PassengerTable from "./PassengerTable";
 
 const CapactiyCard = ({ label, value, max }) => {
   const relativeValue = (value / max) * 100;
@@ -78,7 +78,8 @@ const CapactiyCard = ({ label, value, max }) => {
         title="Dispatch Bus"
         subtitle="Print participant list and dispatch bus to venue"
       >
-        Hello
+        <PassengerTable busName={label} />
+        <Button>Dispatch Bus to MMRC</Button>
       </DialogTemplate>
     </Card>
   );

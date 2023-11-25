@@ -1,6 +1,5 @@
+export const dynamic = "force-dynamic";
 export const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
-// export const revalidate = 0;
-// export const fetchCache = "force-no-store";
 
 import axios from "axios";
 import { Person, Bus } from "./types";
@@ -8,9 +7,9 @@ import { Person, Bus } from "./types";
 export async function getParticipantsData(): Promise<Person[]> {
   if (API_URL) {
     const res = await fetch(`${API_URL}/api/participants/all`, {
-      method: "PUT",
+      method: "GET",
       next: {
-        tags: ["embarkation-data"],
+        tags: ["participants-data", "embarkation-data"],
       },
       headers: {
         "Content-Type": "application/json",
@@ -29,9 +28,9 @@ export async function getParticipantsData(): Promise<Person[]> {
 export async function getAllBusData(): Promise<Bus[]> {
   if (API_URL) {
     const res = await fetch(`${API_URL}/api/bus/all`, {
-      method: "PUT",
+      method: "GET",
       next: {
-        tags: ["embarkation-data"],
+        tags: ["bus-data", "embarkation-data"],
       },
       headers: {
         "Content-Type": "application/json",
@@ -120,8 +119,8 @@ export async function switchBus(fromBus: string, toBus: string): Promise<any> {
 }
 
 export async function updateParticipantVehicle(body: {
-  ticketCode: string; //PARTICIPANT TICKET
-  newVehicle: string; //NEW VEHICLE
+  ticketCode: string;
+  newVehicle: string;
 }): Promise<any> {
   const { ticketCode, newVehicle } = body;
 
@@ -208,12 +207,40 @@ export async function getBusData(busName: string): Promise<any> {
   }
 }
 
+export async function getBusPassengers(name: string): Promise<any> {
+  if (API_URL) {
+    try {
+      const response = await fetch(
+        `${API_URL}/api/bus/get-passengers?name=${name}`,
+        {
+          method: "GET",
+          next: {
+            tags: ["passengers-data"],
+          },
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        return data;
+      } else {
+        console.error(`Failed to fetch data. Status code: ${response.status}`);
+      }
+    } catch (err) {
+      console.error(`Failed to fetch data: ${err}`);
+    }
+  }
+}
+
 export async function updateBusCapacity(
   name: string,
   maxCapacity: number
 ): Promise<any> {
   if (API_URL) {
-    const response = await axios.patch(`${API_URL}/api/bus/update-capacity/`, {
+    await axios.patch(`${API_URL}/api/bus/update-capacity/`, {
       body: {
         name,
         maxCapacity,

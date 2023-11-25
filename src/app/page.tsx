@@ -12,7 +12,7 @@ export default function Home() {
           {`We're still working on things here, for now here's what you can do`}
         </p>
       </div>
-      <Link href="/embarkation">
+      <Link href="/embarkation" prefetch>
         <Button>Go to Embarkation</Button>
       </Link>
       <Link href="/embarkation/check-in">

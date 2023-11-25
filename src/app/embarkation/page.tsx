@@ -1,10 +1,7 @@
-// export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 
 import { API_URL } from "@/lib/api";
-import { getParticipantsData, getAllBusData } from "@/lib/actions";
-import CapacityCard from "@/components/CapacityCard";
-import DataTable from "@/components/DataTable";
-import { columns } from "@/lib/columns";
+import { getParticipantsData, getAllBusData } from "@/lib/api";
 import {
   Card,
   CardContent,
@@ -12,19 +9,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-import { clearCacheByTag } from "@/lib/actions";
 import ParticipantsTable from "@/components/ParticipantsTable";
 import BusesCardGroup from "@/components/BusesCardGroup";
+import { revalidateTag } from "next/cache";
 
 export default async function Home() {
   if (!API_URL) {
     return null;
   }
 
-  clearCacheByTag("embarkation-data");
   const allBuses = await getAllBusData();
   const allParticipants = await getParticipantsData();
+  revalidateTag("embarkation-data");
 
   return (
     <main>

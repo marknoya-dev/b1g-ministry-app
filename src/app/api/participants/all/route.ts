@@ -1,7 +1,7 @@
 import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
 
-export async function PUT() {
+export async function GET() {
   try {
     const participants = await prisma.person.findMany({
       where: {
