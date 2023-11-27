@@ -1,6 +1,17 @@
 import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
 
+const now = new Date();
+const options: Intl.DateTimeFormatOptions = {
+  year: "numeric",
+  month: "short",
+  day: "2-digit",
+  hour: "numeric",
+  minute: "2-digit",
+  hour12: true,
+};
+const formattedNowDate = now.toLocaleString("en-US", options);
+
 export async function PATCH(req: Request) {
   const request = await req.json();
   const { name, maxCapacity }: { name: string; maxCapacity: number } =
@@ -32,6 +43,7 @@ export async function PATCH(req: Request) {
         },
         data: {
           status: "IN_TRANSIT",
+          departureTime: formattedNowDate,
         },
       });
 

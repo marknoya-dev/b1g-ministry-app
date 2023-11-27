@@ -34,6 +34,7 @@ export async function GET(req: Request, body: any) {
         embarkation_temp: true,
         rideToVenue: true,
         rideToVenue_name: true,
+        teamName: true,
       },
     });
 

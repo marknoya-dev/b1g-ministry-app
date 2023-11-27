@@ -42,7 +42,6 @@ export type Person = {
   teamName: string;
   room: string;
   devo: string;
-  hasWaiver: boolean;
 };
 
 type Month =

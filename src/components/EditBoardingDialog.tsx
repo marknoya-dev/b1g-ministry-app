@@ -26,8 +26,9 @@ export default function EditBoardingDialog({ rowData }: { rowData: Person }) {
   const boarding = rowData.rideToVenue;
 
   const noEditCondition =
-    (status === "CHECKED_IN" && boarding === "Carpool") ||
-    (status === "IN_TRANSIT" && boarding === "Bus from CCF Center");
+    (status === "ARRIVED" && boarding === "Carpool") ||
+    ((status === "IN_TRANSIT" || status === "ARRIVED") &&
+      boarding === "Bus from CCF Center");
 
   const [openModal, setOpenModal] = useState(false);
 

@@ -8,8 +8,9 @@ export async function getParticipantsData(): Promise<Person[]> {
   if (API_URL) {
     const res = await fetch(`${API_URL}/api/participants/all`, {
       method: "GET",
-      cache: "no-store",
+      // cache: "no-store",
       next: {
+        revalidate: 1,
         tags: ["participants-data", "embarkation-data"],
       },
       headers: {
@@ -30,8 +31,9 @@ export async function getAllBusData(): Promise<Bus[]> {
   if (API_URL) {
     const res = await fetch(`${API_URL}/api/bus/all`, {
       method: "GET",
-      cache: "no-store",
+      // cache: "no-store",
       next: {
+        revalidate: 1,
         tags: ["bus-data", "embarkation-data"],
       },
       headers: {
@@ -53,9 +55,12 @@ export async function getParticipantData(ticketCode: string): Promise<any> {
   if (API_URL) {
     const res: any = await fetch(`${API_URL}/api/participants/${ticketCode}`, {
       method: "GET",
-      cache: "no-store",
+      // cache: "no-store",
       headers: {
         "Content-Type": "application/json",
+      },
+      next: {
+        revalidate: 1,
       },
     });
 
@@ -216,7 +221,7 @@ export async function getBusPassengers(name: string): Promise<any> {
         `${API_URL}/api/bus/get-passengers?name=${name}`,
         {
           method: "GET",
-          cache: "no-store",
+          // cache: "no-store",
           next: {
             tags: ["passengers-data"],
           },

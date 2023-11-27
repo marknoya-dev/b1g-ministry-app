@@ -7,8 +7,15 @@ import { Settings2, ArrowBigRightDash, Printer, Flag } from "lucide-react";
 import DialogTemplate from "./DialogTemplate";
 import BusSettingsForm from "./BusSettingsForm";
 import PassengerTable from "./PassengerTable";
-import { dispatchBus, arrivedBus } from "@/lib/api";
+import {
+  dispatchBus,
+  arrivedBus,
+  getBusPassengers,
+  getBusData,
+} from "@/lib/api";
 import { useToast } from "@/components/ui/use-toast";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 const CapacityCard = ({ label, value, max, status }) => {
   const relativeValue = (value / max) * 100;
@@ -48,6 +55,46 @@ const CapacityCard = ({ label, value, max, status }) => {
     setOpenArrivalModal(false);
   }
 
+  async function onPrintHandler() {
+    const passengers = await getBusPassengers(label);
+    const busData = await getBusData(label);
+    console.log("Bus Data", busData);
+    console.log("Passengers", passengers);
+    const doc = new jsPDF();
+
+    doc.addImage("/commit-dark.png", "PNG", 8, -8, 60, 60);
+    doc.setFont("helvetica", "bold");
+    doc.text(`${label} Passengers`, 14, 40);
+
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.text(`Logged Departure:`, 140, 20);
+    doc.text(`${busData.departureTime}`, 140, 24);
+
+    doc.setFontSize(12);
+    doc.text("Assigned bus marshall:", 14, 48);
+    doc.line(60, 48, 120, 48);
+    autoTable(doc, {
+      theme: "striped",
+      startY: 53,
+      body: passengers,
+      headStyles: {
+        fillColor: "#000",
+        textColor: "#fff",
+        halign: "left",
+      },
+      columns: [
+        { header: "Ticket", dataKey: "ticketCode" },
+        { header: "First Name", dataKey: "firstName" },
+        { header: "Last Name", dataKey: "lastName" },
+        { header: "Team", dataKey: "teamName" },
+        { header: "Temp", dataKey: "embarkation_temp" },
+      ],
+    });
+
+    doc.save(`${label} Passenger List`);
+  }
+
   return (
     <Card
       className={`flex gap-4 p-3 ${
@@ -78,7 +125,11 @@ const CapacityCard = ({ label, value, max, status }) => {
           </div>
         </div>
         <Progress
-          value={relativeValue}
+          value={
+            status === "IN_TRANSIT" || status === "ARRIVED"
+              ? 100
+              : relativeValue
+          }
           className={`w-full ${
             status === "IN_TRANSIT"
               ? "bg-orange-400"
@@ -109,14 +160,13 @@ const CapacityCard = ({ label, value, max, status }) => {
           {status !== "ARRIVED" ? (
             <Button
               onClick={ToggleBusArrivalModal}
-              className="w-[35px] p-2 h-[35px] bg-white border border-gray-300 hover:bg-neutral-50 hover:border-gray-4000"
+              className="w-[35px] p-2 h-[35px] bg-white border border-success-300 hover:bg-neutral-50 hover:border-gray-4000"
             >
-              <Flag className="text-gray-500 " />
+              <Flag className="text-success-500" />
             </Button>
           ) : null}
-
           <Button
-            onClick={() => console.log("print")}
+            onClick={onPrintHandler}
             className="w-[35px] p-2 h-[35px] bg-white border border-gray-300 hover:bg-neutral-50 hover:border-gray-4000"
           >
             <Printer className="text-gray-500 " />

@@ -1,23 +1,43 @@
 "use client";
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, Row } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Person } from "./types";
 import { Button } from "@/components/ui/button";
 import EditBoardingDialog from "@/components/EditBoardingDialog";
+import { Copy } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
+
+const TicketCodeCell = ({ row }: { row: Row<Person> }) => {
+  const ticketCode: string = row.getValue("ticketCode");
+  const { toast } = useToast();
+
+  function copyTicketCode() {
+    navigator.clipboard.writeText(ticketCode);
+    toast({
+      title: "Copied to clipboard",
+      description: "Ticket code copied to clipboard",
+      duration: 3000,
+    });
+  }
+  return (
+    <div className="whitespace-nowrap text-ellipsis w-full overflow-hidden flex gap-2 hover:text-gray-600 cursor-pointer">
+      {ticketCode}
+      <Copy
+        onClick={copyTicketCode}
+        className="w-[16px] h-[16px] text-gray-600"
+      />
+    </div>
+  );
+};
 
 export const columns: ColumnDef<Person>[] = [
   {
     accessorKey: "ticketCode",
-    size: 200,
+    size: 220,
     header: "Ticket",
     cell: ({ row }) => {
-      const ticketCode: string = row.getValue("ticketCode");
-      return (
-        <div className="whitespace-nowrap text-ellipsis w-full overflow-hidden">
-          {ticketCode}
-        </div>
-      );
+      return <TicketCodeCell row={row} />;
     },
   },
   {

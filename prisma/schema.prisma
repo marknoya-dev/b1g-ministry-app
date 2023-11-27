@@ -17,7 +17,8 @@ model Bus {
   maxCapacity          Int           @default(40)
   passengers           Person[] @relation("toVenue_bus")
   status               BusStatus    @default(ON_QUEUE)
-  // fromVenue_passengers Participant[] @relation("fromVenue_bus")
+  departureTime        String @default("")
+  arrivalTime          String @default("")
 
   @@map("buses")
 }
@@ -83,7 +84,6 @@ model Person {
   workshop2            String?
   teamName             String?
   room                 String
-  hasWaiver            Boolean @default(false)
   // roomId               String? @db.ObjectId
   // room                 Room?   @relation("room", fields: [roomId], references: [id])
 
