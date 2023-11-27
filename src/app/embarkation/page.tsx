@@ -12,15 +12,21 @@ import {
 import ParticipantsTable from "@/components/ParticipantsTable";
 import BusesCardGroup from "@/components/BusesCardGroup";
 import { revalidateTag } from "next/cache";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Embarkation",
+  description: "View the embarkation status of all participants",
+};
 
 export default async function Home() {
   if (!API_URL) {
     return null;
   }
 
+  revalidateTag("embarkation-data");
   const allBuses = await getAllBusData();
   const allParticipants = await getParticipantsData();
-  revalidateTag("embarkation-data");
 
   return (
     <main>

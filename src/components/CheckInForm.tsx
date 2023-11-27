@@ -133,7 +133,7 @@ export function CheckInForm(onSubmit: any) {
     const data = await checkInParticipant(checkInData);
 
     if (data) {
-      const url = `/embarkation/welcome/${participantData.ticketCode}`;
+      const url = `/welcome/${participantData.ticketCode}`;
       router.push(url);
     }
   }

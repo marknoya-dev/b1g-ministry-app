@@ -8,7 +8,12 @@ import {
 } from "@/components/ui/card";
 
 import { CheckInForm } from "@/components/CheckInForm";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Check In",
+  description: "Enter your details to check in",
+};
 export default function Page() {
   return (
     <main>

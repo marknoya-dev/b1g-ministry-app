@@ -28,7 +28,7 @@ export async function PATCH(request: Request) {
             ticketCode,
           },
           data: {
-            embarkation_status: "CHECKED_IN",
+            embarkation_status: "ARRIVED",
             embarkation_temp,
             embarkation_checkInTime: formattedNowDate,
           },

@@ -15,6 +15,13 @@ import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Welcome to B1G Commit!",
+  description: "View your details for the retreat",
+};
+
 export default async function Page({
   params,
 }: {
@@ -90,7 +97,7 @@ export default async function Page({
             value={`Group ${participant.devo}`}
           />
           <Button className="max-w-[600px] w-full" asChild>
-            <Link href={`/embarkation/check-in`}>Back to Check-In</Link>
+            <Link href={`/check-in`}>Back to Check-In</Link>
           </Button>
         </div>
       </main>

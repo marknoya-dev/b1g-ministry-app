@@ -162,7 +162,7 @@ const CapacityCard = ({ label, value, max, status }) => {
               onClick={ToggleBusArrivalModal}
               className="w-[35px] p-2 h-[35px] bg-white border border-success-300 hover:bg-neutral-50 hover:border-gray-4000"
             >
-              <Flag className="text-success-500" />
+              <Flag className="text-gray-500" />
             </Button>
           ) : null}
           <Button
