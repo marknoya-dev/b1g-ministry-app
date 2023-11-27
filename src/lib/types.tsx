@@ -42,6 +42,7 @@ export type Person = {
   teamName: string;
   room: string;
   devo: string;
+  hasWaiver: boolean;
 };
 
 type Month =
@@ -64,6 +65,7 @@ type EmbarkationStatus = "PENDING" | "CHECKED_IN" | "IN_TRANSIT" | "ARRIVED";
 export type Bus = {
   id: string;
   name: string;
+  status: string;
   maxCapacity: number;
   currCapacity: number;
 };

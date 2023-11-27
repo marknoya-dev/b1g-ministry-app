@@ -8,6 +8,7 @@ export async function getParticipantsData(): Promise<Person[]> {
   if (API_URL) {
     const res = await fetch(`${API_URL}/api/participants/all`, {
       method: "GET",
+      cache: "no-store",
       next: {
         tags: ["participants-data", "embarkation-data"],
       },
@@ -29,6 +30,7 @@ export async function getAllBusData(): Promise<Bus[]> {
   if (API_URL) {
     const res = await fetch(`${API_URL}/api/bus/all`, {
       method: "GET",
+      cache: "no-store",
       next: {
         tags: ["bus-data", "embarkation-data"],
       },
@@ -51,7 +53,7 @@ export async function getParticipantData(ticketCode: string): Promise<any> {
   if (API_URL) {
     const res: any = await fetch(`${API_URL}/api/participants/${ticketCode}`, {
       method: "GET",
-      cache: "no-cache",
+      cache: "no-store",
       headers: {
         "Content-Type": "application/json",
       },
@@ -198,9 +200,9 @@ export async function getAllAvailableBus(): Promise<any> {
   }
 }
 
-export async function getBusData(busName: string): Promise<any> {
+export async function getBusData(name: string): Promise<any> {
   if (API_URL) {
-    const response = await fetch(`${API_URL}/api/bus/${busName}`);
+    const response = await fetch(`${API_URL}/api/bus/${name}`);
 
     const data = await response.json();
     return data;
@@ -214,6 +216,7 @@ export async function getBusPassengers(name: string): Promise<any> {
         `${API_URL}/api/bus/get-passengers?name=${name}`,
         {
           method: "GET",
+          cache: "no-store",
           next: {
             tags: ["passengers-data"],
           },
@@ -244,6 +247,26 @@ export async function updateBusCapacity(
       body: {
         name,
         maxCapacity,
+      },
+    });
+  }
+}
+
+export async function dispatchBus(name: string) {
+  if (API_URL) {
+    await axios.patch(`${API_URL}/api/bus/dispatch/`, {
+      body: {
+        name,
+      },
+    });
+  }
+}
+
+export async function arrivedBus(name: string) {
+  if (API_URL) {
+    await axios.patch(`${API_URL}/api/bus/arrived/`, {
+      body: {
+        name,
       },
     });
   }

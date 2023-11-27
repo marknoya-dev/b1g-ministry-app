@@ -16,18 +16,11 @@ model Bus {
   currCapacity         Int           @default(0)
   maxCapacity          Int           @default(40)
   passengers           Person[] @relation("toVenue_bus")
+  status               BusStatus    @default(ON_QUEUE)
   // fromVenue_passengers Participant[] @relation("fromVenue_bus")
 
   @@map("buses")
 }
-
-enum BUS_STATUS {
-  ON_QUEUE
-  BOARDING
-  IN_TRANSIT
-  ARRIVED
-}
-
 
 model Carpool {
   id                   String        @id @default(auto()) @map("_id") @db.ObjectId
@@ -90,6 +83,7 @@ model Person {
   workshop2            String?
   teamName             String?
   room                 String
+  hasWaiver            Boolean @default(false)
   // roomId               String? @db.ObjectId
   // room                 Room?   @relation("room", fields: [roomId], references: [id])
 
@@ -109,6 +103,13 @@ model Person {
 enum EmbarkationStatus {
   PENDING
   CHECKED_IN
+  IN_TRANSIT
+  ARRIVED
+}
+
+enum BusStatus {
+  ON_QUEUE
+  BOARDING
   IN_TRANSIT
   ARRIVED
 }

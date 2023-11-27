@@ -154,7 +154,10 @@ export default function EditBoardingForm({
                         .slice() // Create a shallow copy to avoid mutating the original array
                         .sort((a, b) => a.name.localeCompare(b.name)) // Sort by bus name
                         .map((bus) => {
-                          if (bus.name === rideToVenue_name) {
+                          if (
+                            bus.name === rideToVenue_name ||
+                            bus.status === ("IN_TRANSIT" || "ARRIVED")
+                          ) {
                             return null;
                           } else {
                             return (

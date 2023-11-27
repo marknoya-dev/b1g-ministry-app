@@ -40,7 +40,7 @@ const checkinFormSchema = z.object({
   embarkation_temp: z
     .string()
     .min(2, { message: "Enter a valid temperature" })
-    .max(2),
+    .max(5),
 });
 
 const ticketCodeMask: MaskitoOptions = {
@@ -70,7 +70,7 @@ const ticketCodeMask: MaskitoOptions = {
 };
 
 const temperatureMask: MaskitoOptions = {
-  mask: [/\d/, /\d/],
+  mask: [/\d/, /\d/, ".", /\d/, /\d/],
 };
 
 export function CheckInForm(onSubmit: any) {
@@ -215,7 +215,7 @@ export function CheckInForm(onSubmit: any) {
                       <FormControl>
                         <Input
                           className="text-2xl border-0 border-b-2 p-0 px-1 focus-visible:ring-offset-0 focus-visible:outline-none focus-visible:ring-0"
-                          maxLength={2}
+                          maxLength={5}
                           ref={mask_Temperature}
                           onInput={(evt) => {
                             checkInCheckForm.setValue(

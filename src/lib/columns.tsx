@@ -110,19 +110,15 @@ export const columns: ColumnDef<Person>[] = [
       switch (status) {
         case "PENDING":
           return <Badge variant="warning">Pending</Badge>;
-          break;
 
         case "IN_TRANSIT":
-          return <Badge variant="info">In Transit</Badge>;
-          break;
+          return <Badge variant="orange">In Transit</Badge>;
 
         case "CHECKED_IN":
-          return <Badge variant="success">Checked In</Badge>;
-          break;
+          return <Badge variant="info">Checked In</Badge>;
 
         case "ARRIVED":
           return <Badge variant="success">Arrived</Badge>;
-          break;
 
         default:
           break;

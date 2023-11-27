@@ -16,6 +16,7 @@ export default function BusesCardGroup({ buses }: { buses: Bus[] }) {
               key={bus.name}
               value={bus.currCapacity}
               max={bus.maxCapacity}
+              status={bus.status}
             />
           ))
       ) : (

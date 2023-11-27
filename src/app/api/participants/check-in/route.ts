@@ -39,11 +39,13 @@ export async function PATCH(request: Request) {
         const buses = await prisma.bus.findMany();
 
         //Filter for available buses
-        const availableBus = buses.filter((bus) => {
-          if (bus.currCapacity !== bus.maxCapacity) {
-            return bus;
-          }
-        });
+        const availableBus = buses
+          .filter(
+            (bus) =>
+              bus.currCapacity !== bus.maxCapacity &&
+              (bus.status === "ON_QUEUE" || bus.status === "BOARDING")
+          )
+          .sort((a, b) => a.name.localeCompare(b.name));
 
         //Update the first available bus
         const updateBus = await prisma.bus.update({
@@ -52,6 +54,7 @@ export async function PATCH(request: Request) {
           },
           data: {
             currCapacity: availableBus[0].currCapacity + 1,
+            status: "BOARDING",
           },
         });
 

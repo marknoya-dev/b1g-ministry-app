@@ -97,6 +97,7 @@ export default function BusSettingsForm({
                     id="maxCapacity"
                     type="number"
                     {...field}
+                    value={field.value}
                     defaultValue={
                       busData.maxCapacity ? busData.maxCapacity : maxCapacity
                     }
