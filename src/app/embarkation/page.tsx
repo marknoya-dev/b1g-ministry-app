@@ -15,57 +15,57 @@ import { XCircle } from "lucide-react";
 import useSWR from "swr";
 
 const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
-EmbarkationMetadata;
+const metadata = EmbarkationMetadata;
 export default function Home() {
   // if (!API_URL) {
   //   return null;
   // }
 
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  // const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-  const {
-    data: allParticipants,
-    error: ParticipantsError,
-    isLoading: isLoadingParticipants,
-  } = useSWR(`${API_URL}/api/participants/all`, fetcher, {
-    revalidateOnMount: true,
-    revalidateIfStale: true,
-    revalidateOnReconnect: true,
-    refreshWhenHidden: true,
-    refreshInterval: 1000,
-  });
+  // const {
+  //   data: allParticipants,
+  //   error: ParticipantsError,
+  //   isLoading: isLoadingParticipants,
+  // } = useSWR(`${API_URL}/api/participants/all`, fetcher, {
+  //   revalidateOnMount: true,
+  //   revalidateIfStale: true,
+  //   revalidateOnReconnect: true,
+  //   refreshWhenHidden: true,
+  //   refreshInterval: 5000,
+  // });
 
-  const {
-    data: allBuses,
-    error: BusesError,
-    isLoading: isLoadingBuses,
-  } = useSWR(`${API_URL}/api/bus/all`, fetcher, {
-    revalidateOnMount: true,
-    revalidateIfStale: true,
-    revalidateOnReconnect: true,
-    refreshWhenHidden: true,
-    refreshInterval: 1000,
-  });
+  // const {
+  //   data: allBuses,
+  //   error: BusesError,
+  //   isLoading: isLoadingBuses,
+  // } = useSWR(`${API_URL}/api/bus/all`, fetcher, {
+  //   revalidateOnMount: true,
+  //   revalidateIfStale: true,
+  //   revalidateOnReconnect: true,
+  //   refreshWhenHidden: true,
+  //   refreshInterval: 5000,
+  // });
 
-  if (isLoadingParticipants || isLoadingBuses) {
-    return <LoadingOverlay />;
-  }
+  // if (isLoadingParticipants || isLoadingBuses) {
+  //   return <LoadingOverlay />;
+  // }
 
-  if (ParticipantsError || BusesError) {
-    return (
-      <div className="w-full h-80 flex flex-col justify-center items-center align-middle gap-2 ">
-        <div className="text-red-600">
-          <XCircle size={60} />
-        </div>
-        <div className="flex flex-col items-center justify-center">
-          <div className="font-bold text-[30px]">Failed to load data</div>
-          <div className="font-normal text-[16px]">
-            Try refreshing the page, if error persists contact admin
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // if (ParticipantsError || BusesError) {
+  //   return (
+  //     <div className="w-full h-80 flex flex-col justify-center items-center align-middle gap-2 ">
+  //       <div className="text-red-600">
+  //         <XCircle size={60} />
+  //       </div>
+  //       <div className="flex flex-col items-center justify-center">
+  //         <div className="font-bold text-[30px]">Failed to load data</div>
+  //         <div className="font-normal text-[16px]">
+  //           Try refreshing the page, if error persists contact admin
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <main>
@@ -82,7 +82,7 @@ export default function Home() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <BusesCardGroup buses={allBuses} />
+            <BusesCardGroup />
           </CardContent>
         </Card>
         <Card className="shadow-md">
@@ -90,7 +90,7 @@ export default function Home() {
             <CardTitle className="text-lg">All Participants</CardTitle>
           </CardHeader>
           <CardContent>
-            <ParticipantsTable allParticipants={allParticipants} />
+            <ParticipantsTable />
           </CardContent>
         </Card>
       </div>
