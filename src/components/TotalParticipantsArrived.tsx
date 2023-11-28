@@ -30,7 +30,9 @@ export default function BusesCardGroup() {
     }
   );
 
-  console.log(data);
+  const style = {
+    width: 90,
+  };
 
   if (isLoading) {
     return (
@@ -40,19 +42,12 @@ export default function BusesCardGroup() {
             Total Participants arrived at MMRC
           </CardTitle>
           <CardDescription className="mt-0">
-            Live tracking of participants arrived at MMRC
+            Live tracking of participants arrival
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-col w-full">
-            <Progress
-              value={0}
-              className={`w-full 
-        }`}
-            />
-            <p className="flex gap-1 mt-2 text-gray-600 text-[14px]">
-              <span>Loading...</span>
-            </p>
+          <div className="flex justify-center items-center ">
+            <Lottie animationData={LoadingDots} loop={true} style={style} />
           </div>
         </CardContent>
       </Card>
@@ -67,7 +62,7 @@ export default function BusesCardGroup() {
             Total Participants arrived at MMRC
           </CardTitle>
           <CardDescription className="mt-0">
-            Live tracking of participants arrived at MMRC
+            Live tracking of participants arrival
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -91,7 +86,7 @@ export default function BusesCardGroup() {
             Total Participants arrived at MMRC
           </CardTitle>
           <CardDescription className="mt-0">
-            Live tracking of participants arrived at MMRC
+            Live tracking of participants arrival
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -110,4 +105,18 @@ export default function BusesCardGroup() {
       </Card>
     );
   }
+
+  return (
+    <Card className="shadow-md">
+      <CardHeader className="gap-4px">
+        <CardTitle className="text-lg">
+          Total Participants arrived at MMRC
+        </CardTitle>
+        <CardDescription className="mt-0">
+          Live tracking of participants arrival
+        </CardDescription>
+      </CardHeader>
+      <CardContent></CardContent>
+    </Card>
+  );
 }

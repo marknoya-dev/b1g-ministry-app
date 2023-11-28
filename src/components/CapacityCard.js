@@ -1,3 +1,4 @@
+"use client";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 import React, { useState } from "react";
@@ -9,6 +10,7 @@ import DialogTemplate from "./DialogTemplate";
 import BusSettingsForm from "./BusSettingsForm";
 import PassengerTable from "./PassengerTable";
 import { useRouter } from "next/navigation";
+import fetcher from "@/lib/fetcher";
 import {
   dispatchBus,
   arrivedBus,
@@ -18,9 +20,11 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import useSWR from "swr";
 
 const CapacityCard = ({ label, value, max, status }) => {
   const relativeValue = (value / max) * 100;
+  const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
   const [openSettingsModal, setOpenSettingsModal] = useState(false);
   const [openDispatchBusModal, setOpenDispatchBusModal] = useState(false);
   const [openArrivalModal, setOpenArrivalModal] = useState(false);
@@ -60,9 +64,16 @@ const CapacityCard = ({ label, value, max, status }) => {
     router.refresh();
   }
 
+  const { data: passengers } = useSWR(
+    `${API_URL}/api/bus/get-passengers?name=${label}`,
+    fetcher
+  );
+  const { data: busData } = useSWR(`${API_URL}/api/bus/${label}`, fetcher);
+
   async function onPrintHandler() {
-    const passengers = await getBusPassengers(label);
-    const busData = await getBusData(label);
+    // const passengers = await getBusPassengers(label);
+    // const busData = await getBusData(label);
+
     console.log("Bus Data", busData);
     console.log("Passengers", passengers);
     const doc = new jsPDF();

@@ -208,7 +208,6 @@ export async function getAllAvailableBus(): Promise<any> {
 export async function getBusData(name: string): Promise<any> {
   if (API_URL) {
     const response = await fetch(`${API_URL}/api/bus/${name}`);
-
     const data = await response.json();
     return data;
   }

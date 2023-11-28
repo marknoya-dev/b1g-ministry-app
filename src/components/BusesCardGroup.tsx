@@ -24,7 +24,6 @@ export default function BusesCardGroup() {
     refreshInterval: 5000,
   });
 
-  console.log("isValidatingParticipants", isValidating);
   const style = {
     width: 90,
   };
