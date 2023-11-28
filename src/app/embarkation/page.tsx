@@ -1,5 +1,4 @@
 "use client";
-export const dynamic = "force-dynamic";
 import {
   getParticipantsData,
   getAllBusData,
@@ -30,29 +29,27 @@ export default function Home() {
   //   return null;
   // }
 
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  // const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-  const {
-    data: allParticipants,
-    error: ParticipantsError,
-    isLoading: isLoadingParticipants,
-  } = useSWR(`${API_URL}/api/participants/all`, fetcher);
+  // const {
+  //   data: allParticipants,
+  //   error: ParticipantsError,
+  //   isLoading: isLoadingParticipants,
+  // } = useSWR(`${API_URL}/api/participants/all`, fetcher);
 
-  const {
-    data: allBuses,
-    error: BusesError,
-    isLoading: isLoadingBuses,
-  } = useSWR(`${API_URL}/api/bus/all`, fetcher);
+  // const {
+  //   data: allBuses,
+  //   error: BusesError,
+  //   isLoading: isLoadingBuses,
+  // } = useSWR(`${API_URL}/api/bus/all`, fetcher);
 
-  console.log(allParticipants);
+  // if (isLoadingParticipants || isLoadingBuses) {
+  //   return <div>Loading...</div>;
+  // }
 
-  if (isLoadingParticipants || isLoadingBuses) {
-    return <div>Loading...</div>;
-  }
-
-  if (ParticipantsError || BusesError) {
-    return <div>Failed to load data</div>;
-  }
+  // if (ParticipantsError || BusesError) {
+  //   return <div>Failed to load data</div>;
+  // }
 
   return (
     <main>
@@ -69,7 +66,7 @@ export default function Home() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <BusesCardGroup buses={allBuses} />
+            <BusesCardGroup />
           </CardContent>
         </Card>
         <Card className="shadow-md">
@@ -77,7 +74,7 @@ export default function Home() {
             <CardTitle className="text-lg">All Participants</CardTitle>
           </CardHeader>
           <CardContent>
-            <ParticipantsTable allParticipants={allParticipants} />
+            <ParticipantsTable />
           </CardContent>
         </Card>
       </div>

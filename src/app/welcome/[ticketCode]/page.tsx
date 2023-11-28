@@ -32,7 +32,7 @@ export default async function Page({
   const { participant } = participantData;
 
   if (participant?.embarkation_status !== "CHECKED_IN" || null) {
-    redirect("/embarkation/check-in");
+    redirect("/check-in");
   } else {
     return (
       <main className="text-center ">

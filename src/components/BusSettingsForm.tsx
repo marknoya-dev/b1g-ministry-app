@@ -26,11 +26,11 @@ export default function BusSettingsForm({
   modalControl,
 }: {
   busName: string;
-  maxCapacity: number;
+  maxCapacity: string;
   modalControl: Dispatch<SetStateAction<boolean>>;
 }) {
   const [busData, setBusData] = useState({} as Bus);
-
+  // const [maxCapacityInput, setMaxCapacityInput] = useState<number>(maxCapacity);
   const { toast } = useToast();
   const router = useRouter();
 
@@ -49,18 +49,20 @@ export default function BusSettingsForm({
   }, [busName]);
 
   const formSchema = z.object({
-    maxCapacity: z.string().transform((val) => parseInt(val)),
-    // .optional(),
+    maxCapacity: z.string().optional(),
   });
 
   const SettingsForm = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      maxCapacity: maxCapacity.toString(),
+    },
   });
 
   async function onSubmitHandler(data: z.infer<typeof formSchema>) {
     console.log(data.maxCapacity, busData.currCapacity);
-    if (data.maxCapacity && busData.currCapacity) {
-      if (data.maxCapacity >= busData.currCapacity) {
+    if (data.maxCapacity) {
+      if (data.maxCapacity >= busData.currCapacity.toString()) {
         updateBusCapacity(busName, data.maxCapacity);
         modalControl(false);
         toast({
@@ -96,15 +98,7 @@ export default function BusSettingsForm({
               <FormItem className="w-full">
                 <FormLabel>Change max capacity</FormLabel>
                 <FormControl>
-                  <Input
-                    id="maxCapacity"
-                    type="number"
-                    {...field}
-                    value={field.value}
-                    defaultValue={
-                      busData.maxCapacity ? busData.maxCapacity : maxCapacity
-                    }
-                  />
+                  <Input id="maxCapacity" type="number" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

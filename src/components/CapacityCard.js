@@ -8,6 +8,7 @@ import { Settings2, ArrowBigRightDash, Printer, Flag } from "lucide-react";
 import DialogTemplate from "./DialogTemplate";
 import BusSettingsForm from "./BusSettingsForm";
 import PassengerTable from "./PassengerTable";
+import { useRouter } from "next/navigation";
 import {
   dispatchBus,
   arrivedBus,
@@ -24,6 +25,7 @@ const CapacityCard = ({ label, value, max, status }) => {
   const [openDispatchBusModal, setOpenDispatchBusModal] = useState(false);
   const [openArrivalModal, setOpenArrivalModal] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
   function openSettingsModalHandler() {
     setOpenSettingsModal(true);
   }
@@ -40,6 +42,7 @@ const CapacityCard = ({ label, value, max, status }) => {
       duration: 2000,
     });
     setOpenDispatchBusModal(false);
+    router.refresh();
   }
 
   function ToggleBusArrivalModal() {
@@ -54,6 +57,7 @@ const CapacityCard = ({ label, value, max, status }) => {
       duration: 2000,
     });
     setOpenArrivalModal(false);
+    router.refresh();
   }
 
   async function onPrintHandler() {

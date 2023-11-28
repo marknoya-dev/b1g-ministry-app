@@ -17,7 +17,7 @@ export default function PassengerTable({ busName }: { busName: string }) {
       }
     }
     getPassengers();
-  }, [busName, allPassengers]);
+  }, []);
 
   return (
     <ModalDataTable

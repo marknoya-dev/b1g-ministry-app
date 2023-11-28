@@ -14,7 +14,7 @@ export async function getParticipantsData(): Promise<Person[]> {
   if (API_URL) {
     const res = await fetch(`${API_URL}/api/participants/all`, {
       method: "GET",
-      cache: "no-store",
+      // cache: "no-store",
       next: {
         tags: ["participants-data", "embarkation-data"],
       },
@@ -36,7 +36,7 @@ export async function getAllBusData(): Promise<Bus[]> {
   if (API_URL) {
     const res = await fetch(`${API_URL}/api/bus/all`, {
       method: "GET",
-      cache: "no-store",
+      // cache: "no-store",
       next: {
         tags: ["bus-data", "embarkation-data"],
       },
@@ -59,7 +59,7 @@ export async function getParticipantData(ticketCode: string): Promise<any> {
   if (API_URL) {
     const res: any = await fetch(`${API_URL}/api/participants/${ticketCode}`, {
       method: "GET",
-      cache: "no-store",
+      // cache: "no-store",
       headers: {
         "Content-Type": "application/json",
       },
@@ -222,7 +222,7 @@ export async function getBusPassengers(name: string): Promise<any> {
         `${API_URL}/api/bus/get-passengers?name=${name}`,
         {
           method: "GET",
-          cache: "no-store",
+          // cache: "no-store",
           next: {
             tags: ["passengers-data"],
           },
@@ -246,19 +246,20 @@ export async function getBusPassengers(name: string): Promise<any> {
 
 export async function updateBusCapacity(
   name: string,
-  maxCapacity: number
+  maxCapacity: string
 ): Promise<any> {
   if (API_URL) {
     await axios.patch(`${API_URL}/api/bus/update-capacity/`, {
       body: {
         name,
-        maxCapacity,
+        maxCapacity: parseInt(maxCapacity),
       },
     });
   }
 }
 
 export async function dispatchBus(name: string) {
+  console.log("API_URL", API_URL);
   if (API_URL) {
     await axios.patch(`${API_URL}/api/bus/dispatch/`, {
       body: {
