@@ -15,6 +15,7 @@ export default function BusesCardGroup() {
     data: allBuses,
     error: BusesError,
     isLoading: isLoadingBuses,
+    isValidating,
   } = useSWR(`${API_URL}/api/bus/all`, fetcher, {
     revalidateOnMount: true,
     revalidateIfStale: true,
@@ -23,6 +24,7 @@ export default function BusesCardGroup() {
     refreshInterval: 5000,
   });
 
+  console.log("isValidatingParticipants", isValidating);
   const style = {
     width: 90,
   };

@@ -22,6 +22,7 @@ export default function ParticipantsTable() {
     data: allParticipants,
     error: ParticipantsError,
     isLoading: isLoadingParticipants,
+    isValidating,
   } = useSWR(`${API_URL}/api/participants/all`, fetcher, {
     revalidateOnMount: true,
     revalidateIfStale: true,
@@ -30,6 +31,7 @@ export default function ParticipantsTable() {
     refreshInterval: 5000,
   });
 
+  console.log("isValidatingParticipants", isValidating);
   const style = {
     width: 90,
   };
