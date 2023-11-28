@@ -14,6 +14,7 @@ import {
 import ParticipantsTable from "@/components/ParticipantsTable";
 import BusesCardGroup from "@/components/BusesCardGroup";
 import { Metadata } from "next";
+import { Person } from "@/lib/types";
 
 export const metadata: Metadata = {
   title: "Embarkation",
@@ -28,8 +29,35 @@ export default async function Home() {
   }
 
   await revalidateEmbarkation();
-  const allBuses = await getAllBusData();
-  const allParticipants = await getParticipantsData();
+
+  const resParticipants = await fetch(`${API_URL}/api/participants/all`, {
+    method: "GET",
+    cache: "no-store",
+    next: {
+      tags: ["participants-data", "embarkation-data"],
+    },
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const allParticipants: any = await resParticipants.json();
+
+  const resBus = await fetch(`${API_URL}/api/bus/all`, {
+    method: "GET",
+    cache: "no-store",
+    next: {
+      tags: ["bus-data", "embarkation-data"],
+    },
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const allBuses = await resBus.json();
+
+  // const allBuses = await getAllBusData();
+  // const allParticipants = await getParticipantsData();
 
   return (
     <main>
