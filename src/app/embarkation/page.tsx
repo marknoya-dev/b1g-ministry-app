@@ -1,3 +1,4 @@
+"use client";
 export const dynamic = "force-dynamic";
 import {
   getParticipantsData,
@@ -15,49 +16,43 @@ import ParticipantsTable from "@/components/ParticipantsTable";
 import BusesCardGroup from "@/components/BusesCardGroup";
 import { Metadata } from "next";
 import { Person } from "@/lib/types";
+import useSWR from "swr";
 
-export const metadata: Metadata = {
-  title: "Embarkation",
-  description: "View the embarkation status of all participants",
-};
+// export const metadata: Metadata = {
+//   title: "Embarkation",
+//   description: "View the embarkation status of all participants",
+// };
 
 const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
 
-export default async function Home() {
-  if (!API_URL) {
-    return null;
+export default function Home() {
+  // if (!API_URL) {
+  //   return null;
+  // }
+
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+  const {
+    data: allParticipants,
+    error: ParticipantsError,
+    isLoading: isLoadingParticipants,
+  } = useSWR(`${API_URL}/api/participants/all`, fetcher);
+
+  const {
+    data: allBuses,
+    error: BusesError,
+    isLoading: isLoadingBuses,
+  } = useSWR(`${API_URL}/api/bus/all`, fetcher);
+
+  console.log(allParticipants);
+
+  if (isLoadingParticipants || isLoadingBuses) {
+    return <div>Loading...</div>;
   }
 
-  await revalidateEmbarkation();
-
-  const resParticipants = await fetch(`${API_URL}/api/participants/all`, {
-    method: "GET",
-    cache: "no-store",
-    next: {
-      tags: ["participants-data", "embarkation-data"],
-    },
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  const allParticipants: any = await resParticipants.json();
-
-  const resBus = await fetch(`${API_URL}/api/bus/all`, {
-    method: "GET",
-    cache: "no-store",
-    next: {
-      tags: ["bus-data", "embarkation-data"],
-    },
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  const allBuses = await resBus.json();
-
-  // const allBuses = await getAllBusData();
-  // const allParticipants = await getParticipantsData();
+  if (ParticipantsError || BusesError) {
+    return <div>Failed to load data</div>;
+  }
 
   return (
     <main>
@@ -89,3 +84,34 @@ export default async function Home() {
     </main>
   );
 }
+
+// await revalidateEmbarkation();
+
+// const resParticipants = await fetch(`${API_URL}/api/participants/all`, {
+//   method: "GET",
+//   cache: "no-store",
+//   next: {
+//     tags: ["participants-data", "embarkation-data"],
+//   },
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+// });
+
+// const allParticipants: any = await resParticipants.json();
+
+// const resBus = await fetch(`${API_URL}/api/bus/all`, {
+//   method: "GET",
+//   cache: "no-store",
+//   next: {
+//     tags: ["bus-data", "embarkation-data"],
+//   },
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+// });
+
+// const allBuses = await resBus.json();
+
+// const allBuses = await getAllBusData();
+// const allParticipants = await getParticipantsData();

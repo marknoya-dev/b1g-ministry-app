@@ -21,12 +21,14 @@ const TicketCodeCell = ({ row }: { row: Row<Person> }) => {
     });
   }
   return (
-    <div className="whitespace-nowrap text-ellipsis w-full overflow-hidden flex gap-2 hover:text-gray-600 cursor-pointer">
+    <div
+      onClick={copyTicketCode}
+      className="whitespace-nowrap text-ellipsis w-full overflow-hidden flex gap-2 hover:text-gray-600 cursor-pointer"
+    >
       {ticketCode}
-      <Copy
-        onClick={copyTicketCode}
-        className="w-min-[16px] h-min-[16px] w-[16px] h-[16px] text-gray-600"
-      />
+      <div className="w-[16px] h-[16px]">
+        <Copy className="text-gray-600" size={16} />
+      </div>
     </div>
   );
 };

@@ -27,6 +27,7 @@ export async function PATCH(req: Request) {
       },
     });
 
+    console.log(updatedBus, "updatedBus");
     if (updatedBus) {
       const dispatchedBusPassengers = await prisma.person.updateMany({
         where: {

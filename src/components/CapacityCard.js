@@ -1,4 +1,5 @@
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -190,7 +191,7 @@ const CapacityCard = ({ label, value, max, status }) => {
       <DialogTemplate
         openModal={openDispatchBusModal}
         setOpenModal={setOpenDispatchBusModal}
-        title="Dispatch Bus"
+        title={`Dispatch ${label}`}
         subtitle="Print participant list and dispatch bus to venue"
       >
         <PassengerTable busName={label} />
