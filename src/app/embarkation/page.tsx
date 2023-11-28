@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import ParticipantsTable from "@/components/ParticipantsTable";
 import BusesCardGroup from "@/components/BusesCardGroup";
+import TotalParticipantsArrived from "@/components/TotalParticipantsArrived";
 import { EmbarkationMetadata } from "@/lib/head";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import { XCircle } from "lucide-react";
@@ -80,10 +81,11 @@ export default function Home() {
               Watch which buses are currently getting filled
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className=" min-h-[100px]">
             <BusesCardGroup />
           </CardContent>
         </Card>
+        <TotalParticipantsArrived />
         <Card className="shadow-md">
           <CardHeader>
             <CardTitle className="text-lg">All Participants</CardTitle>
