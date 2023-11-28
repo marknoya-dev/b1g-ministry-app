@@ -4,7 +4,6 @@ import CapacityCard from "./CapacityCard";
 import useSWR from "swr";
 const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
 import fetcher from "@/lib/fetcher";
-import LoadingOverlay from "@/components/LoadingOverlay";
 import { XCircle } from "lucide-react";
 import { Bus } from "@/lib/types";
 
@@ -44,7 +43,7 @@ export default function BusesCardGroup() {
           <XCircle size={40} />
         </div>
         <div className="flex flex-col items-center justify-center">
-          <div className="font-bold text-[28px]">Failed to load data</div>
+          <div className="font-bold text-[18px]">Failed to load data</div>
           <div className="font-normal text-[16px]">
             Try refreshing the page, if error persists contact admin
           </div>

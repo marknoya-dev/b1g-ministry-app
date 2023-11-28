@@ -1,5 +1,5 @@
 "use server";
-
+export const dynamic = "force-dynamic";
 import axios from "axios";
 import { Person, Bus } from "./types";
 const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;

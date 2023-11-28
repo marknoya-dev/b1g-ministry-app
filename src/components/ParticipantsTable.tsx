@@ -1,5 +1,6 @@
 "use client";
 export const dynamic = "force-dynamic";
+
 import DataTable from "./DataTable";
 import { columns } from "@/lib/columns";
 import { Person } from "@/lib/types";
@@ -38,7 +39,7 @@ export default function ParticipantsTable() {
 
   if (isLoadingParticipants) {
     return (
-      <div className="flex justify-center items-center ">
+      <div className="flex justify-center items-center">
         <Lottie animationData={LoadingDots} loop={true} style={style} />
       </div>
     );
@@ -51,7 +52,7 @@ export default function ParticipantsTable() {
           <XCircle size={40} />
         </div>
         <div className="flex flex-col items-center justify-center">
-          <div className="font-bold text-[28px]">Failed to load data</div>
+          <div className="font-bold text-[18px]">Failed to load data</div>
           <div className="font-normal text-[16px]">
             Try refreshing the page, if error persists contact admin
           </div>
