@@ -25,7 +25,7 @@ const TicketCodeCell = ({ row }: { row: Row<Person> }) => {
       {ticketCode}
       <Copy
         onClick={copyTicketCode}
-        className="w-[16px] h-[16px] text-gray-600"
+        className="w-min-[16px] h-min-[16px] w-[16px] h-[16px] text-gray-600"
       />
     </div>
   );

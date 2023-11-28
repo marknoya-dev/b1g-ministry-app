@@ -1,6 +1,4 @@
 export const dynamic = "force-dynamic";
-
-import { API_URL } from "@/lib/api";
 import { getParticipantsData, getAllBusData } from "@/lib/api";
 import {
   Card,
@@ -18,6 +16,8 @@ export const metadata: Metadata = {
   title: "Embarkation",
   description: "View the embarkation status of all participants",
 };
+
+const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
 
 export default async function Home() {
   if (!API_URL) {

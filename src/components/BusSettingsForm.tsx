@@ -49,10 +49,8 @@ export default function BusSettingsForm({
   }, [busName]);
 
   const formSchema = z.object({
-    maxCapacity: z
-      .string()
-      .transform((val) => parseInt(val))
-      .optional(),
+    maxCapacity: z.string().transform((val) => parseInt(val)),
+    // .optional(),
   });
 
   const SettingsForm = useForm<z.infer<typeof formSchema>>({
@@ -60,7 +58,8 @@ export default function BusSettingsForm({
   });
 
   async function onSubmitHandler(data: z.infer<typeof formSchema>) {
-    if (data.maxCapacity && data.maxCapacity >= busData.currCapacity) {
+    console.log(data.maxCapacity, busData.currCapacity);
+    if (data.maxCapacity >= busData.currCapacity) {
       updateBusCapacity(busName, data.maxCapacity);
       modalControl(false);
       toast({

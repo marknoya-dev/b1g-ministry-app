@@ -1,14 +1,15 @@
-export const dynamic = "force-dynamic";
-export const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
+"use server";
 
 import axios from "axios";
 import { Person, Bus } from "./types";
+const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
 
 export async function getParticipantsData(): Promise<Person[]> {
   if (API_URL) {
     const res = await fetch(`${API_URL}/api/participants/all`, {
       method: "GET",
       cache: "no-store",
+
       next: {
         tags: ["participants-data", "embarkation-data"],
       },
