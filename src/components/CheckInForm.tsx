@@ -111,7 +111,7 @@ export function CheckInForm(onSubmit: any) {
         setOpenModal_checkIn((openModal_checkIn) => !openModal_checkIn);
       } else {
         //If participant is already checkedin, redirect to welcome page
-        const url = `/embarkation/welcome/${participant.ticketCode}`;
+        const url = `/welcome/${participant.ticketCode}`;
         router.push(url);
       }
     }

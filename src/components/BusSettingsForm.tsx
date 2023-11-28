@@ -59,21 +59,25 @@ export default function BusSettingsForm({
 
   async function onSubmitHandler(data: z.infer<typeof formSchema>) {
     console.log(data.maxCapacity, busData.currCapacity);
-    if (data.maxCapacity >= busData.currCapacity) {
-      updateBusCapacity(busName, data.maxCapacity);
-      modalControl(false);
-      toast({
-        title: "Bus capacity updated",
-        description: "Capacity has been updated successfully",
-        duration: 2000,
-      });
+    if (data.maxCapacity && busData.currCapacity) {
+      if (data.maxCapacity >= busData.currCapacity) {
+        updateBusCapacity(busName, data.maxCapacity);
+        modalControl(false);
+        toast({
+          title: "Bus capacity updated",
+          description: "Capacity has been updated successfully",
+          duration: 2000,
+        });
 
-      router.refresh();
+        router.refresh();
+      } else {
+        SettingsForm.setError("maxCapacity", {
+          message:
+            "Max capacity must be greater than current capacity and must not be negative",
+        });
+      }
     } else {
-      SettingsForm.setError("maxCapacity", {
-        message:
-          "Max capacity must be greater than current capacity and must not be negative",
-      });
+      console.log("No data");
     }
   }
 

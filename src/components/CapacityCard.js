@@ -169,7 +169,7 @@ const CapacityCard = ({ label, value, max, status }) => {
             onClick={onPrintHandler}
             className="w-[35px] p-2 h-[35px] bg-white border border-gray-300 hover:bg-neutral-50 hover:border-gray-4000"
           >
-            <Printer className="text-gray-500 " />
+            <Printer className="text-gray-500" />
           </Button>
         </div>
       )}

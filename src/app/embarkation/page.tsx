@@ -1,5 +1,9 @@
 export const dynamic = "force-dynamic";
-import { getParticipantsData, getAllBusData } from "@/lib/api";
+import {
+  getParticipantsData,
+  getAllBusData,
+  revalidateEmbarkation,
+} from "@/lib/api";
 import {
   Card,
   CardContent,
@@ -9,7 +13,6 @@ import {
 } from "@/components/ui/card";
 import ParticipantsTable from "@/components/ParticipantsTable";
 import BusesCardGroup from "@/components/BusesCardGroup";
-import { revalidateTag } from "next/cache";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -24,7 +27,7 @@ export default async function Home() {
     return null;
   }
 
-  revalidateTag("embarkation-data");
+  await revalidateEmbarkation();
   const allBuses = await getAllBusData();
   const allParticipants = await getParticipantsData();
 

@@ -3,13 +3,18 @@
 import axios from "axios";
 import { Person, Bus } from "./types";
 const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
+import { revalidatePath, revalidateTag } from "next/cache";
+
+export async function revalidateEmbarkation() {
+  revalidateTag("embarkation-data");
+  revalidatePath("/embarkation");
+}
 
 export async function getParticipantsData(): Promise<Person[]> {
   if (API_URL) {
     const res = await fetch(`${API_URL}/api/participants/all`, {
       method: "GET",
       cache: "no-store",
-
       next: {
         tags: ["participants-data", "embarkation-data"],
       },
