@@ -4,7 +4,6 @@ import CapacityCard from "./CapacityCard";
 import useSWR from "swr";
 const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
 import fetcher from "@/lib/fetcher";
-import { XCircle } from "lucide-react";
 import { Bus } from "@/lib/types";
 
 import Lottie from "lottie-react";
@@ -41,8 +40,14 @@ export default function BusesCardGroup() {
   }
 
   return (
-    <div className="grid grid-rows-2 gap-3 grid-cols-1 md:grid-cols-4">
-      {allBuses ? (
+    <div
+      className={
+        allBuses.length
+          ? `grid grid-rows-2 gap-3 grid-cols-1 lg:grid-cols-4`
+          : ""
+      }
+    >
+      {allBuses.length ? (
         allBuses
           .slice() // Create a shallow copy to avoid mutating the original array
           .sort((a: any, b: any) => a.name.localeCompare(b.name)) // Sort by bus name

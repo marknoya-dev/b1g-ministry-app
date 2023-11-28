@@ -36,7 +36,7 @@ const TicketCodeCell = ({ row }: { row: Row<Person> }) => {
 export const columns: ColumnDef<Person>[] = [
   {
     accessorKey: "ticketCode",
-    size: 220,
+    size: 230,
     header: "Ticket",
     cell: ({ row }) => {
       return <TicketCodeCell row={row} />;

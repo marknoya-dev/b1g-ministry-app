@@ -17,6 +17,7 @@ export async function GET(
         id: true,
         maxCapacity: true,
         currCapacity: true,
+        departureTime: true,
         name: true,
       },
     });

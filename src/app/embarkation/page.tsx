@@ -81,7 +81,7 @@ export default function Home() {
               Watch which buses are currently getting filled
             </CardDescription>
           </CardHeader>
-          <CardContent className=" min-h-[100px]">
+          <CardContent>
             <BusesCardGroup />
           </CardContent>
         </Card>

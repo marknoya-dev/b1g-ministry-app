@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "./ui/button";
-import { Settings2, ArrowBigRightDash, Printer, Flag } from "lucide-react";
+import { Settings, ArrowBigRightDash, Printer, Flag } from "lucide-react";
 import DialogTemplate from "./DialogTemplate";
 import BusSettingsForm from "./BusSettingsForm";
 import PassengerTable from "./PassengerTable";
@@ -71,9 +71,6 @@ const CapacityCard = ({ label, value, max, status }) => {
   const { data: busData } = useSWR(`${API_URL}/api/bus/${label}`, fetcher);
 
   async function onPrintHandler() {
-    // const passengers = await getBusPassengers(label);
-    // const busData = await getBusData(label);
-
     console.log("Bus Data", busData);
     console.log("Passengers", passengers);
     const doc = new jsPDF();
@@ -115,9 +112,11 @@ const CapacityCard = ({ label, value, max, status }) => {
     <Card
       className={`flex gap-4 p-3 ${
         status === "IN_TRANSIT"
-          ? "border-orange-400"
-          : status === "ARRIVED" || value === max
-          ? "border-green-700"
+          ? "border-orange-400 bg-orange-50"
+          : status === "ARRIVED"
+          ? "border-green-700 bg-green-50"
+          : value === max
+          ? "border-blue-800 bg-blue-50"
           : ""
       }`}
     >
@@ -127,9 +126,11 @@ const CapacityCard = ({ label, value, max, status }) => {
             className={`font-semibold text-md ${
               status === "IN_TRANSIT"
                 ? "text-orange-400"
-                : status === "ARRIVED" || value === max
+                : status === "ARRIVED"
                 ? "text-green-700"
-                : "text-gray-700"
+                : value === max
+                ? "text-blue-600"
+                : ""
             }`}
           >
             {label}
@@ -149,9 +150,11 @@ const CapacityCard = ({ label, value, max, status }) => {
           className={`w-full ${
             status === "IN_TRANSIT"
               ? "bg-orange-400"
-              : status === "ARRIVED" || value === max
+              : status === "ARRIVED"
               ? "bg-green-700"
-              : "text-gray-700"
+              : value === max
+              ? "bg-blue-600"
+              : ""
           }`}
         />
       </div>
@@ -162,11 +165,14 @@ const CapacityCard = ({ label, value, max, status }) => {
             onClick={openSettingsModalHandler}
             className="w-[35px] p-[7px] h-[35px] bg-white border border-gray-300 hover:bg-neutral-50 hover:border-gray-400"
           >
-            <Settings2 className="text-gray-500" />
+            <Settings className="text-gray-500" />
           </Button>
           <Button
             onClick={openDispatchBusModalHandler}
-            className="w-[35px] p-0 h-[35px] bg-white border border-gray-300 hover:bg-neutral-50 hover:border-gray-4000"
+            disabledvalue={value === 0}
+            className={`w-[35px] p-0 h-[35px] bg-white border border-gray-300 hover:bg-neutral-50 hover:border-gray-4000 ${
+              value === 0 ? "cursor-not-allowed" : ""
+            }"}`}
           >
             <ArrowBigRightDash className="text-gray-500 " />
           </Button>

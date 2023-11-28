@@ -12,14 +12,13 @@ datasource db {
 
 model Bus {
   id                   String        @id @default(auto()) @map("_id") @db.ObjectId
-  name                 String @unique
+  name                 String        @unique
   currCapacity         Int           @default(0)
-  maxCapacity          Int           @default(40)
-  passengers           Person[] @relation("toVenue_bus")
+  maxCapacity          Int           @default(47)
+  passengers           Person[]      @relation("toVenue_bus")
   status               BusStatus    @default(ON_QUEUE)
-  departureTime        String @default("")
-  arrivalTime          String @default("")
-
+  departureTime        String        @default("00:00")
+  arrivalTime          String        @default("00:00")
   @@map("buses")
 }
 

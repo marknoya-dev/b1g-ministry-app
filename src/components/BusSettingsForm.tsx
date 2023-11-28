@@ -62,7 +62,7 @@ export default function BusSettingsForm({
   async function onSubmitHandler(data: z.infer<typeof formSchema>) {
     console.log(data.maxCapacity, busData.currCapacity);
     if (data.maxCapacity) {
-      if (data.maxCapacity >= busData.currCapacity.toString()) {
+      if (parseInt(data.maxCapacity) >= busData.currCapacity) {
         updateBusCapacity(busName, data.maxCapacity);
         modalControl(false);
         toast({

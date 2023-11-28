@@ -83,10 +83,18 @@ export default function BusesCardGroup() {
           <CardTitle
             className={`text-lg ${percentage == 100 ? "text-green-700" : null}`}
           >
-            Total Participants arrived at MMRC
+            <div className="flex gap-2 relative h-3 w-full items-center">
+              Total Participants arrived at MMRC
+              {percentage !== 100 ? (
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                </span>
+              ) : null}
+            </div>
           </CardTitle>
-          <CardDescription className="mt-0">
-            Live tracking of participants arrival
+          <CardDescription className="mt-2">
+            <div>Live tracking of participants arrival</div>
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -98,7 +106,8 @@ export default function BusesCardGroup() {
             />
             <p className="flex gap-1 mt-2 text-gray-600 text-[14px]">
               <span>{data.arrivedParticipants}</span>of
-              <span>{data.totalParticipants}</span>participants has arrived
+              <span>{data.totalParticipants}</span>participants has arrived{" "}
+              <span className="font-bold">({Math.round(percentage)}%)</span>
             </p>
           </div>
         </CardContent>
