@@ -16,6 +16,7 @@ export async function PATCH(request: Request) {
         currCapacity: true,
       },
     });
+
     const newBusData = await prisma.bus.findUnique({
       where: {
         name: newVehicle,

@@ -5,6 +5,7 @@ import useSWR from "swr";
 const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
 import fetcher from "@/lib/fetcher";
 import { XCircle } from "lucide-react";
+import ErrorMessage from "./ErrorMessage";
 import { Bus } from "@/lib/types";
 import {
   Card,
@@ -70,17 +71,7 @@ export default function BusesCardGroup() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="w-full h-80 flex flex-col justify-center items-center align-middle gap-2 ">
-            <div className="text-red-600">
-              <XCircle size={40} />
-            </div>
-            <div className="flex flex-col items-center justify-center">
-              <div className="font-bold text-[18px]">Failed to load data</div>
-              <div className="font-normal text-[16px]">
-                Try refreshing the page, if error persists contact admin
-              </div>
-            </div>
-          </div>
+          <ErrorMessage />
         </CardContent>
       </Card>
     );
