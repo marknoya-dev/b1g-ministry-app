@@ -31,13 +31,13 @@ export default async function Page({
   const participantData = await getParticipantData(ticketCode);
   const { participant } = participantData;
 
-  if (participant?.embarkation_status !== "CHECKED_IN" || null) {
+  if (participant?.embarkation_status === "PENDING" || null) {
     redirect("/check-in");
   } else {
     return (
       <main className="text-center ">
         <div className="fixed w-full h-screen top-0 left-0 pointer-events-none">
-          <LottieAnimation />
+          <LottieAnimation lottie="confetti" />
         </div>
         <div className="w-full">
           <h1 className="text-[24px] font-bold text-gray-800 w-full">

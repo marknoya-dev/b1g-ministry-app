@@ -1,9 +1,5 @@
 "use client";
-import {
-  getParticipantsData,
-  getAllBusData,
-  revalidateEmbarkation,
-} from "@/lib/api";
+export const dynamic = "force-dynamic";
 import {
   Card,
   CardContent,
@@ -13,43 +9,63 @@ import {
 } from "@/components/ui/card";
 import ParticipantsTable from "@/components/ParticipantsTable";
 import BusesCardGroup from "@/components/BusesCardGroup";
-import { Metadata } from "next";
-import { Person } from "@/lib/types";
+import { EmbarkationMetadata } from "@/lib/head";
+import LoadingOverlay from "@/components/LoadingOverlay";
+import { XCircle } from "lucide-react";
 import useSWR from "swr";
 
-// export const metadata: Metadata = {
-//   title: "Embarkation",
-//   description: "View the embarkation status of all participants",
-// };
-
 const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
-
+EmbarkationMetadata;
 export default function Home() {
   // if (!API_URL) {
   //   return null;
   // }
 
-  // const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-  // const {
-  //   data: allParticipants,
-  //   error: ParticipantsError,
-  //   isLoading: isLoadingParticipants,
-  // } = useSWR(`${API_URL}/api/participants/all`, fetcher);
+  const {
+    data: allParticipants,
+    error: ParticipantsError,
+    isLoading: isLoadingParticipants,
+  } = useSWR(`${API_URL}/api/participants/all`, fetcher, {
+    revalidateOnMount: true,
+    revalidateIfStale: true,
+    revalidateOnReconnect: true,
+    refreshWhenHidden: true,
+    refreshInterval: 1000,
+  });
 
-  // const {
-  //   data: allBuses,
-  //   error: BusesError,
-  //   isLoading: isLoadingBuses,
-  // } = useSWR(`${API_URL}/api/bus/all`, fetcher);
+  const {
+    data: allBuses,
+    error: BusesError,
+    isLoading: isLoadingBuses,
+  } = useSWR(`${API_URL}/api/bus/all`, fetcher, {
+    revalidateOnMount: true,
+    revalidateIfStale: true,
+    revalidateOnReconnect: true,
+    refreshWhenHidden: true,
+    refreshInterval: 1000,
+  });
 
-  // if (isLoadingParticipants || isLoadingBuses) {
-  //   return <div>Loading...</div>;
-  // }
+  if (isLoadingParticipants || isLoadingBuses) {
+    return <LoadingOverlay />;
+  }
 
-  // if (ParticipantsError || BusesError) {
-  //   return <div>Failed to load data</div>;
-  // }
+  if (ParticipantsError || BusesError) {
+    return (
+      <div className="w-full h-80 flex flex-col justify-center items-center align-middle gap-2 ">
+        <div className="text-red-600">
+          <XCircle size={60} />
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <div className="font-bold text-[30px]">Failed to load data</div>
+          <div className="font-normal text-[16px]">
+            Try refreshing the page, if error persists contact admin
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <main>
@@ -66,7 +82,7 @@ export default function Home() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <BusesCardGroup />
+            <BusesCardGroup buses={allBuses} />
           </CardContent>
         </Card>
         <Card className="shadow-md">
@@ -74,7 +90,7 @@ export default function Home() {
             <CardTitle className="text-lg">All Participants</CardTitle>
           </CardHeader>
           <CardContent>
-            <ParticipantsTable />
+            <ParticipantsTable allParticipants={allParticipants} />
           </CardContent>
         </Card>
       </div>
