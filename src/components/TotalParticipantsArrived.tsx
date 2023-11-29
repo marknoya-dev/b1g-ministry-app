@@ -17,7 +17,9 @@ import {
 import Lottie from "lottie-react";
 import LoadingDots from "@/components/lottie/loadingdots.json";
 import { Progress } from "@/components/ui/progress";
+import { ReactElement, useState } from "react";
 export default function BusesCardGroup() {
+  const [content, setContent] = useState<ReactElement>();
   const { data, error, isLoading, isValidating } = useSWR(
     `${API_URL}/api/embarkation`,
     fetcher,
