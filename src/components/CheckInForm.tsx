@@ -199,7 +199,7 @@ export function CheckInForm(onSubmit: any) {
           <DialogHeader>
             <DialogTitle className="text-2xl mb-2s">{`Hi, ${participantData?.nickname}!`}</DialogTitle>
             <DialogDescription>
-              {`Are you ready to commit? Before we give your bus assignment we need to make sure everyone's safe and sound for the retreat`}
+              {`Are you ready to commit? Before proceeding, we need to make sure everyone's safe and sound for the retreat`}
             </DialogDescription>
             <Form {...checkInCheckForm}>
               <form
@@ -211,7 +211,7 @@ export function CheckInForm(onSubmit: any) {
                   name="embarkation_temp"
                   render={({ field }) => (
                     <FormItem className="mt-4">
-                      <FormLabel>{`Temparature (°C)`}</FormLabel>
+                      <FormLabel>{`Temperature (°C)`}</FormLabel>
                       <FormControl>
                         <Input
                           className="text-2xl border-0 border-b-2 p-0 px-1 focus-visible:ring-offset-0 focus-visible:outline-none focus-visible:ring-0"
