@@ -13,7 +13,7 @@ export async function getParticipantsData(): Promise<Person[]> {
   if (API_URL) {
     const res = await fetch(`${API_URL}/api/participants/all`, {
       method: "GET",
-      // cache: "no-store",
+      cache: "no-store",
       next: {
         tags: ["participants-data", "embarkation-data"],
       },
@@ -35,7 +35,7 @@ export async function getAllBusData(): Promise<Bus[]> {
   if (API_URL) {
     const res = await fetch(`${API_URL}/api/bus/all`, {
       method: "GET",
-      // cache: "no-store",
+      cache: "no-store",
       next: {
         tags: ["bus-data", "embarkation-data"],
       },
@@ -54,11 +54,10 @@ export async function getAllBusData(): Promise<Bus[]> {
 }
 
 export async function getParticipantData(ticketCode: string): Promise<any> {
-  //Pass an ID to this function and it will return the data for that ID
   if (API_URL) {
     const res: any = await fetch(`${API_URL}/api/participants/${ticketCode}`, {
       method: "GET",
-      // cache: "no-store",
+      cache: "no-store",
       headers: {
         "Content-Type": "application/json",
       },
@@ -137,14 +136,11 @@ export async function updateParticipantVehicle(body: {
       const { rideToVenue_name: currVehicle } = req.participant;
 
       if (req.status === 200) {
-        const updateParticipantVehicle = await axios.patch(
-          `${API_URL}/api/participants/switch-bus/`,
-          {
-            ticketCode,
-            currVehicle,
-            newVehicle,
-          }
-        );
+        await axios.patch(`${API_URL}/api/participants/switch-bus/`, {
+          ticketCode,
+          currVehicle,
+          newVehicle,
+        });
       }
     } catch (error) {
       console.error(error);
@@ -220,7 +216,7 @@ export async function getBusPassengers(name: string): Promise<any> {
         `${API_URL}/api/bus/get-passengers?name=${name}`,
         {
           method: "GET",
-          // cache: "no-store",
+          cache: "no-store",
           next: {
             tags: ["passengers-data"],
           },
@@ -257,7 +253,6 @@ export async function updateBusCapacity(
 }
 
 export async function dispatchBus(name: string) {
-  console.log("API_URL", API_URL);
   if (API_URL) {
     await axios.patch(`${API_URL}/api/bus/dispatch/`, {
       body: {
@@ -272,6 +267,16 @@ export async function arrivedBus(name: string) {
     await axios.patch(`${API_URL}/api/bus/arrived/`, {
       body: {
         name,
+      },
+    });
+  }
+}
+
+export async function resetData(ticketCode: string): Promise<any> {
+  if (API_URL) {
+    await axios.patch(`${API_URL}/api/participants/reset-data/`, {
+      body: {
+        ticketCode,
       },
     });
   }

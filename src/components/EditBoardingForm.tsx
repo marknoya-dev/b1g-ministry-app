@@ -174,7 +174,6 @@ export default function EditBoardingForm({
             />
           </div>
         ) : null}
-
         <Button type="submit" className="w-full mt-4">
           Save
         </Button>

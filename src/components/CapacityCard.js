@@ -66,10 +66,16 @@ const CapacityCard = ({ label, value, max, status }) => {
 
   const { data: passengers } = useSWR(
     `${API_URL}/api/bus/get-passengers?name=${label}`,
-    fetcher
+    fetcher,
+    { revalidateOnMount: true, revalidateIfStale: true, refreshInterval: 3000 }
   );
-  const { data: busData } = useSWR(`${API_URL}/api/bus/${label}`, fetcher);
+  const { data: busData } = useSWR(`${API_URL}/api/bus/${label}`, fetcher, {
+    revalidateOnMount: true,
+    revalidateIfStale: true,
+    refreshInterval: 3000,
+  });
 
+  console.log(busData?.bus);
   async function onPrintHandler() {
     console.log("Bus Data", busData);
     console.log("Passengers", passengers);
@@ -80,9 +86,10 @@ const CapacityCard = ({ label, value, max, status }) => {
     doc.text(`${label} Passengers`, 14, 40);
 
     doc.setFontSize(10);
+    doc.setFont("helvetica", "bold");
+    doc.text(`Logged Departure`, 155, 20);
     doc.setFont("helvetica", "normal");
-    doc.text(`Logged Departure:`, 140, 20);
-    doc.text(`${busData.departureTime}`, 140, 24);
+    doc.text(`${busData?.bus?.departureTime}`, 155, 25);
 
     doc.setFontSize(12);
     doc.text("Assigned bus marshall:", 14, 48);
@@ -205,6 +212,7 @@ const CapacityCard = ({ label, value, max, status }) => {
         <BusSettingsForm
           busName={label}
           maxCapacity={max}
+          currCapacity={busData ? busData.bus.currCapacity : 0}
           modalControl={setOpenSettingsModal}
         />
       </DialogTemplate>

@@ -23,14 +23,15 @@ import { Dispatch } from "react";
 export default function BusSettingsForm({
   busName,
   maxCapacity,
+  currCapacity,
   modalControl,
 }: {
   busName: string;
   maxCapacity: string;
+  currCapacity: string;
   modalControl: Dispatch<SetStateAction<boolean>>;
 }) {
   const [busData, setBusData] = useState({} as Bus);
-  // const [maxCapacityInput, setMaxCapacityInput] = useState<number>(maxCapacity);
   const { toast } = useToast();
   const router = useRouter();
 
