@@ -27,7 +27,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/embarkation/app.tsx",
+    "src/app/(with-nav)/embarkation/app.tsx",
     "src/app/layout.jsx",
     "src/app/layout.jsx",
     "src/app/api/participants/[ticketCode]/route.js"

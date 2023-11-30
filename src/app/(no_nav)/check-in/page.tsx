@@ -16,8 +16,8 @@ export const metadata: Metadata = {
 };
 export default function Page() {
   return (
-    <main>
-      <h1 className="text-[24px] font-bold mb-[16px] text-gray-700">
+    <main className="max-w-[900px] mx-auto">
+      <h1 className="text-[24px] font-bold mb-[16px] text-white w-full text-center">
         Embarkation Check In
       </h1>
       <Card className="shadow-md">

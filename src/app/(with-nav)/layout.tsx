@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/toaster";
 import { SWRProvider } from "@/components/swr-provider";
 import "@/styles/globals.css";
-
 export const metadata: Metadata = {
   title: "B1G Ministry App",
   description: "Centralized Management System",
@@ -26,7 +25,7 @@ export default function RootLayout({
       <body
         suppressHydrationWarning={true}
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          `min-h-screen bg-background font-sans antialiased`,
           fontSans.variable
         )}
       >

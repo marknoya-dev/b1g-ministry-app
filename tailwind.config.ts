@@ -6,6 +6,7 @@ module.exports = {
   content: [
     "./src/app/*.{ts,tsx,js}",
     "./src/app/**/*.{ts,tsx,js}",
+    "./src/app/**/**/*.{ts,tsx,js}",
     "./src/components/*.{ts,tsx,js}",
     "./src/components/**/*.{ts,tsx,js}",
     "./src/lib/*.{ts,tsx,js}",
@@ -35,6 +36,10 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      backgroundImage: {
+        commit: "url('/checkin-bg.webp')",
+        "footer-texture": "url('/img/footer-texture.png')",
       },
     },
   },

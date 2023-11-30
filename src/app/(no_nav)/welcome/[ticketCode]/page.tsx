@@ -37,13 +37,13 @@ export default async function Page({
     return (
       <main className="text-center ">
         <div className="fixed w-full h-screen top-0 left-0 pointer-events-none">
-          <LottieAnimation lottie="confetti" />
+          <LottieAnimation lottie="fireworks" />
         </div>
         <div className="w-full">
-          <h1 className="text-[24px] font-bold text-gray-800 w-full">
+          <h1 className="text-[24px] font-bold text-white w-full">
             Welcome to B1G Commit, {participant.nickname}!
           </h1>
-          <div className="text-[16px] font-normal mt-[2px] text-gray-600">
+          <div className="text-[16px] font-normal mt-[2px] text-white">
             {`Here's everything you need to know about your stay at the retreat`}
           </div>
         </div>
@@ -109,7 +109,7 @@ export default async function Page({
             </Card>
           ) : null}
 
-          <Button className="max-w-[600px] w-full" asChild>
+          <Button className="max-w-[600px] w-full bg-green-950" asChild>
             <Link href={`/check-in`}>Back to Check-In</Link>
           </Button>
         </div>
