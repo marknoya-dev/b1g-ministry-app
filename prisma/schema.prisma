@@ -60,7 +60,7 @@ model Person {
   embarkation_checkInTime    String?
 
   carpoolCar                 Carpool?     
-  carpoolRole                String?
+  // carpoolRole                String?
   
   rideToVenue                String
   rideToVenue_name           String?

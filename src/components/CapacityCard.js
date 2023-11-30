@@ -176,7 +176,7 @@ const CapacityCard = ({ label, value, max, status }) => {
           </Button>
           <Button
             onClick={openDispatchBusModalHandler}
-            disabledvalue={value === 0}
+            disabled={value === 0}
             className={`w-[35px] p-0 h-[35px] bg-white border border-gray-300 hover:bg-neutral-50 hover:border-gray-4000 ${
               value === 0 ? "cursor-not-allowed" : ""
             }"}`}

@@ -109,7 +109,10 @@ export default async function Page({
             </Card>
           ) : null}
 
-          <Button className="max-w-[600px] w-full bg-green-950" asChild>
+          <Button
+            className="max-w-[600px] w-full bg-red-900 hover:bg-red-800"
+            asChild
+          >
             <Link href={`/check-in`}>Back to Check-In</Link>
           </Button>
         </div>

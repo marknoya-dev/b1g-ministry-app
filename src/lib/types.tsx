@@ -18,7 +18,7 @@ export type Person = {
   // contactPerson_relationship: string;
 
   carpoolCar?: string;
-  carpoolRole?: string;
+  // carpoolRole?: string;
 
   embarkation_temp?: string;
   embarkation_status: EmbarkationStatus;

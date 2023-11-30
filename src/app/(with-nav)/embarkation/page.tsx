@@ -45,7 +45,9 @@ export default function Home() {
         </div>
         <Card className="shadow-md">
           <CardHeader>
-            <CardTitle className="text-lg">All Participants</CardTitle>
+            <CardTitle className="text-lg">
+              All Participants and Volunteers
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <ParticipantsTable />
@@ -55,34 +57,3 @@ export default function Home() {
     </main>
   );
 }
-
-// await revalidateEmbarkation();
-
-// const resParticipants = await fetch(`${API_URL}/api/participants/all`, {
-//   method: "GET",
-//   cache: "no-store",
-//   next: {
-//     tags: ["participants-data", "embarkation-data"],
-//   },
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-// });
-
-// const allParticipants: any = await resParticipants.json();
-
-// const resBus = await fetch(`${API_URL}/api/bus/all`, {
-//   method: "GET",
-//   cache: "no-store",
-//   next: {
-//     tags: ["bus-data", "embarkation-data"],
-//   },
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-// });
-
-// const allBuses = await resBus.json();
-
-// const allBuses = await getAllBusData();
-// const allParticipants = await getParticipantsData();

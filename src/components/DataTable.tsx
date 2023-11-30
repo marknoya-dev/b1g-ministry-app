@@ -22,6 +22,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import { DataTablePagination } from "@/components/ui/DataTablePagination";
 import { Input } from "@/components/ui/input";
 
@@ -67,22 +77,35 @@ export default function DataTable<TData, TValue>({
           }
           className="max-w-[200px]"
         />
-        {/* {table.getColumn("embarkation_status") ? (
-          <Input
-            placeholder="Filter status"
-            value={
-              (table
-                .getColumn("embarkation_status")
-                ?.getFilterValue() as string) ?? ""
-            }
-            onChange={(event) =>
-              table
-                .getColumn("embarkation_status")
-                ?.setFilterValue(event.target.value)
-            }
-            className="max-w-[200px]"
-          />
-        ) : null} */}
+
+        <Input
+          placeholder="Filter vehicle"
+          value={
+            (table.getColumn("rideToVenue_name")?.getFilterValue() as string) ??
+            ""
+          }
+          onChange={(event) =>
+            table
+              .getColumn("rideToVenue_name")
+              ?.setFilterValue(event.target.value)
+          }
+          className="max-w-[200px]"
+        />
+
+        <Input
+          placeholder="Filter status"
+          value={
+            (table
+              .getColumn("embarkation_status")
+              ?.getFilterValue() as string) ?? ""
+          }
+          onChange={(event) =>
+            table
+              .getColumn("embarkation_status")
+              ?.setFilterValue(event.target.value)
+          }
+          className="max-w-[200px]"
+        />
       </div>
       <div className="rounded-md border">
         <Table className="">

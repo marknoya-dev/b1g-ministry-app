@@ -12,11 +12,7 @@ import LoadingDots from "@/components/lottie/loadingdots.json";
 import ErrorMessage from "./ErrorMessage";
 
 const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
-// {
-//   allParticipants,
-// }: {
-//   allParticipants: Person[];
-// }
+
 export default function ParticipantsTable() {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
