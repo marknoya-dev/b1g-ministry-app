@@ -42,16 +42,16 @@ model Person {
   lastName                   String
   nickname                   String
   gender                     String
-  email                      String
   mobile                     String?
-  birthMonth                 Int
-  birthYear                  Int
-  civilStatus                String
-  profession                 String
-  workplace                  String
-  contactPerson_name         String
-  contactPerson_mobile       String?
-  contactPerson_relationship String
+  // email                      String
+  // birthMonth                 Int
+  // birthYear                  Int
+  // civilStatus                String
+  // profession                 String
+  // workplace                  String
+  // contactPerson_name         String
+  // contactPerson_mobile       String?
+  // contactPerson_relationship String
 
     
   //Embarkation from Center details
@@ -74,15 +74,16 @@ model Person {
   // rideFromVenue_carpool Carpool? @relation("fromVenue_carpool", fields: [rideFromVenue_Id], references: [id], onUpdate: NoAction, onDelete: NoAction)
   // rideFromVenue_bus     Bus?     @relation("fromVenue_bus", fields: [rideFromVenue_Id], references: [id])
 
-  medicalCondition     String?
-  foodRestriction      String?
-  dgroup_leader        String
-  satellite_loc        String
-  age                  Int
+  // medicalCondition     String?
+  // foodRestriction      String?
+  // dgroup_leader        String
+  // satellite_loc        String
+  // age                  Int
   workshop1            String?
   workshop2            String?
   teamName             String?
   room                 String
+  tableNum             Int
   // roomId               String? @db.ObjectId
   // room                 Room?   @relation("room", fields: [roomId], references: [id])
 

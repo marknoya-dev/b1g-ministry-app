@@ -6,16 +6,16 @@ export type Person = {
   lastName: string;
   nickname: string;
   gender: string;
-  email: string;
+  // email: string;
   mobile: string;
-  birthMonth: number;
-  birthYear: number;
-  civilStatus: string;
-  profession: string;
-  workplace: string;
-  contactPerson_name: string;
-  contactPerson_mobile: string;
-  contactPerson_relationship: string;
+  // birthMonth: number;
+  // birthYear: number;
+  // civilStatus: string;
+  // profession: string;
+  // workplace: string;
+  // contactPerson_name: string;
+  // contactPerson_mobile: string;
+  // contactPerson_relationship: string;
 
   carpoolCar?: string;
   carpoolRole?: string;
@@ -31,17 +31,18 @@ export type Person = {
   // rideFromVenue?: string;
   // rideFromVenue_Id?: string;
 
-  medicalCondition?: string;
-  foodRestriction?: string;
-  dgroup_leader: string;
-  dgroup_leader_mobile: string;
-  satellite_loc: string;
-  age: number;
+  // medicalCondition?: string;
+  // foodRestriction?: string;
+  // dgroup_leader: string;
+  // dgroup_leader_mobile: string;
+  // satellite_loc: string;
+  // age: number;
   workshop1: string;
   workshop2: string;
   teamName: string;
   room: string;
   devo: string;
+  tableNum: number;
 };
 
 type Month =

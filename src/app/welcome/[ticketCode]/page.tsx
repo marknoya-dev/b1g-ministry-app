@@ -56,46 +56,59 @@ export default async function Page({
             />
           ) : null}
 
-          <WelcomeCard title="Team Name" value={participant.teamName} />
+          {participant.teamName ? (
+            <WelcomeCard title="Team Name" value={participant.teamName} />
+          ) : null}
           <WelcomeCard title="Room Assignment" value={participant.room} />
 
-          <Card className="shadow-md text-center max-w-[600px] w-full  border-t-4 border-t-red-800">
-            <CardHeader className="">
-              <CardTitle className="text-[20px] font-semibold text-gray-700 mb-[4px] ">
-                Retreat Workshops
-              </CardTitle>
-              <CardContent>
-                <div>
-                  <p className="font-normal text-gray-700">
-                    You will be attending the following workshops
-                  </p>
-                </div>
-                <hr className="my-6" />
-                <div className="flex flex-col gap-5">
-                  <div>
-                    <p className="font-medium text-gray-800">Workshop 1</p>
-                    <div className="flex flex-col gap-2">
-                      <p className="font-bold text-xl">
-                        {participant.workshop1}
-                      </p>
-                    </div>
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-800">Workshop 2</p>
-                    <div className="flex flex-col gap-2">
-                      <p className="font-bold text-xl">
-                        {participant.workshop2}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </CardHeader>
-          </Card>
+          {participant.devo ? (
+            <WelcomeCard
+              title="Morning Devotion Group"
+              value={`Group ${participant.devo}`}
+            />
+          ) : null}
+
           <WelcomeCard
-            title="Morning Devotion Group"
-            value={`Group ${participant.devo}`}
+            title="Dining Hall Assignment"
+            value={`Table Number ${participant.tableNum}`}
           />
+
+          {participant.workshop1 && participant.workshop2 ? (
+            <Card className="shadow-md text-center max-w-[600px] w-full  border-t-4 border-t-red-800">
+              <CardHeader className="">
+                <CardTitle className="text-[20px] font-semibold text-gray-700 mb-[4px] ">
+                  Retreat Workshops
+                </CardTitle>
+                <CardContent>
+                  <div>
+                    <p className="font-normal text-gray-700">
+                      You will be attending the following workshops
+                    </p>
+                  </div>
+                  <hr className="my-6" />
+                  <div className="flex flex-col gap-5">
+                    <div>
+                      <p className="font-medium text-gray-800">Workshop 1</p>
+                      <div className="flex flex-col gap-2">
+                        <p className="font-bold text-xl">
+                          {participant.workshop1}
+                        </p>
+                      </div>
+                    </div>
+                    <div>
+                      <p className="font-medium text-gray-800">Workshop 2</p>
+                      <div className="flex flex-col gap-2">
+                        <p className="font-bold text-xl">
+                          {participant.workshop2}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </CardHeader>
+            </Card>
+          ) : null}
+
           <Button className="max-w-[600px] w-full" asChild>
             <Link href={`/check-in`}>Back to Check-In</Link>
           </Button>

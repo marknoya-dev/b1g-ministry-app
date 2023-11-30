@@ -24,7 +24,6 @@ export async function PATCH(request: Request) {
       if (rideToVenue === "Carpool") {
         const updateParticipant = await prisma.person.update({
           where: {
-            role: "PARTICIPANT",
             ticketCode,
           },
           data: {

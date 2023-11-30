@@ -11,7 +11,7 @@ export async function GET(
 
     const participant = await prisma.person.findUnique({
       where: {
-        role: "PARTICIPANT",
+        // role: "PARTICIPANT",
         ticketCode,
       },
     });

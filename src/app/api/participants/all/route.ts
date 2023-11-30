@@ -6,7 +6,7 @@ export async function GET() {
   try {
     const participants = await prisma.person.findMany({
       where: {
-        role: "PARTICIPANT",
+        // role: "PARTICIPANT",
       },
     });
     return NextResponse.json(participants, { status: 200 });

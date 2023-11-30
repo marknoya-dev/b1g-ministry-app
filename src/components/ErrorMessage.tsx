@@ -2,7 +2,7 @@ import { XCircle } from "lucide-react";
 
 export default function ErrorMessage() {
   return (
-    <div className="w-full h-80 flex flex-col justify-center items-center align-middle gap-2 ">
+    <div className="w-full h-40 flex flex-col justify-center items-center align-middle gap-2 ">
       <div className="text-red-600">
         <XCircle size={40} />
       </div>

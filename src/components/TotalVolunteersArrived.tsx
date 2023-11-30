@@ -18,10 +18,10 @@ import Lottie from "lottie-react";
 import LoadingDots from "@/components/lottie/loadingdots.json";
 import { Progress } from "@/components/ui/progress";
 import { ReactElement, useState } from "react";
-export default function TotalParticipantsArrived() {
+export default function TotalVolunteersArrived() {
   const [content, setContent] = useState<ReactElement>();
   const { data, error, isLoading, isValidating } = useSWR(
-    `${API_URL}/api/embarkation?type=participants`,
+    `${API_URL}/api/embarkation?type=volunteers`,
     fetcher,
     {
       revalidateOnMount: true,
@@ -41,10 +41,10 @@ export default function TotalParticipantsArrived() {
       <Card className="shadow-md w-full">
         <CardHeader className="gap-4px">
           <CardTitle className="text-lg">
-            Total Participants arrived at MMRC
+            Total Volunteers arrived at MMRC
           </CardTitle>
           <CardDescription className="mt-0">
-            Live tracking of participants arrival
+            Live tracking of volunteers arrival
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -61,10 +61,10 @@ export default function TotalParticipantsArrived() {
       <Card className="shadow-md w-full">
         <CardHeader className="gap-4px">
           <CardTitle className="text-lg">
-            Total Participants arrived at MMRC
+            Total Volunteers arrived at MMRC
           </CardTitle>
           <CardDescription className="mt-0">
-            Live tracking of participants arrival
+            Live tracking of volunteers arrival
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -87,7 +87,7 @@ export default function TotalParticipantsArrived() {
             className={`text-lg ${percentage == 100 ? "text-green-700" : null}`}
           >
             <div className="flex gap-2 relative h-3 w-full items-center">
-              Total Participants arrived at MMRC
+              Total Volunteers arrived at MMRC
               {percentage !== 100 ? (
                 <span className="relative flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
@@ -97,7 +97,7 @@ export default function TotalParticipantsArrived() {
             </div>
           </CardTitle>
           <CardDescription className="mt-2">
-            <div>Live tracking of participants arrival</div>
+            <div>Live tracking of volunteers arrival</div>
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -109,7 +109,7 @@ export default function TotalParticipantsArrived() {
             />
             <p className="flex gap-1 mt-2 text-gray-600 text-[14px]">
               <span>{data.arrived}</span>of
-              <span>{data.total}</span>participants has arrived{" "}
+              <span>{data.total}</span>volunteers has arrived{" "}
               <span className="font-bold">({Math.round(percentage)}%)</span>
             </p>
           </div>
@@ -122,10 +122,10 @@ export default function TotalParticipantsArrived() {
     <Card className="shadow-md w-full">
       <CardHeader className="gap-4px">
         <CardTitle className="text-lg">
-          Total Participants arrived at MMRC
+          Total Volunteer arrived at MMRC
         </CardTitle>
         <CardDescription className="mt-0">
-          Live tracking of participants arrival
+          Live tracking of volunteer arrival
         </CardDescription>
       </CardHeader>
       <CardContent></CardContent>
