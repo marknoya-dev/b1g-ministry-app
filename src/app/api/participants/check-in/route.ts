@@ -21,7 +21,7 @@ export async function PATCH(request: Request) {
 
   try {
     if (embarkation_status !== "CHECKED_IN") {
-      if (rideToVenue === "Carpool") {
+      if (rideToVenue === "Carpool" || "Commute") {
         const updateParticipant = await prisma.person.update({
           where: {
             ticketCode,
@@ -33,7 +33,7 @@ export async function PATCH(request: Request) {
           },
         });
         return NextResponse.json(updateParticipant, { status: 200 });
-      } else {
+      } else if (rideToVenue === "Bus from CCF Center") {
         //rideToVenue === "Bus"
         const buses = await prisma.bus.findMany();
 

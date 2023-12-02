@@ -104,6 +104,8 @@ export const columns: ColumnDef<Person>[] = [
           break;
         case "Carpool":
           return <Badge variant="secondary">Carpool</Badge>;
+        case "Commute":
+          return <Badge variant="secondary">Commute</Badge>;
           break;
       }
     },
@@ -141,6 +143,9 @@ export const columns: ColumnDef<Person>[] = [
 
         case "ARRIVED":
           return <Badge variant="success">Arrived</Badge>;
+
+        case "NO_SHOW":
+          return <Badge variant="destructive">No Show</Badge>;
 
         default:
           break;

@@ -20,7 +20,6 @@ export default function ParticipantsTable() {
     data: allParticipants,
     error: ParticipantsError,
     isLoading: isLoadingParticipants,
-    isValidating,
   } = useSWR(`${API_URL}/api/participants/all`, fetcher, {
     revalidateOnMount: true,
     revalidateIfStale: true,

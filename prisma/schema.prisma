@@ -105,6 +105,7 @@ enum EmbarkationStatus {
   CHECKED_IN
   IN_TRANSIT
   ARRIVED
+  NO_SHOW
 }
 
 enum BusStatus {

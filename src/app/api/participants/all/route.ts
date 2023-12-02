@@ -9,6 +9,7 @@ export async function GET() {
         // role: "PARTICIPANT",
       },
     });
+    console.log(participants);
     return NextResponse.json(participants, { status: 200 });
   } catch (error) {
     return NextResponse.json(
